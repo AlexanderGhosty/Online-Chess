@@ -63,9 +63,6 @@
     <ClInclude Include="chessboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="chesspiece.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="chesssquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,20 +75,17 @@
     <QtMoc Include="room.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="chesspiece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
-    
-    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">

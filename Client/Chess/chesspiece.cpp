@@ -6,15 +6,18 @@ ChessPiece::ChessPiece(Type type, Team team) :
     team(team),
     selected(false)
 {
-
     // ниже стереть
-    
-    QPixmap pixmap(50, 50);
+    /*QPixmap pixmap(50, 50);
     pixmap.fill(Qt::red);
-    setPixmap(pixmap);
+    setPixmap(pixmap);*/
 }
 
-//bool canMoveTo(int posX, int posY);
+// bool canMoveTo(int posX, int posY);
+
+void ChessPiece::setTeam(Team team)
+{
+	this->team = team;
+}
 
 void ChessPiece::setNewPos(int posX, int posY)
 {
@@ -56,9 +59,36 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {
-        setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);
+        // setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);
+
+        QPointF newPos = event->scenePos();
+
+        // Определяем границы сцены и размеры объекта
+        QRectF sceneRect = scene()->sceneRect();
+        QRectF boundingRect = this->boundingRect();
+
+        // Определяем новые координаты
+        qreal newX = newPos.x();
+        qreal newY = newPos.y();
+
+        // Ограничиваем координаты объекта, чтобы он не выходил за границы сцены
+        if (newX < sceneRect.left() + boundingRect.width() / 2)
+            newX = sceneRect.left() + boundingRect.width() / 2;
+        else if (newX > sceneRect.right() - boundingRect.width() / 2)
+            newX = sceneRect.right() - boundingRect.width() / 2;
+
+        if (newY < sceneRect.top() + boundingRect.height() / 2)
+            newY = sceneRect.top() + boundingRect.height() / 2;
+        else if (newY > sceneRect.bottom() - boundingRect.height() / 2)
+            newY = sceneRect.bottom() - boundingRect.height() / 2;
+
+        // Перемещаем объект на новое место
+        setPos(newX - 25, newY- 25);
+
+        // Вызываем базовую реализацию для обработки других событий перемещения
+        QGraphicsItem::mouseMoveEvent(event);
     }
-    //QGraphicsItem::mouseMoveEvent(event);
+    // QGraphicsItem::mouseMoveEvent(event);
 }
 
 void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) 

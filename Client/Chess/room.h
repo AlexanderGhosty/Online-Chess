@@ -5,7 +5,6 @@
 #include <QWidget>
 #include "chesspiece.h"
 
-
 namespace Ui {
 class Room;
 }
@@ -20,7 +19,9 @@ public:
     ChessView *view;
     QScrollArea *scrollArea;
 
+
 private:
+    ChessPiece::Type teamToMove;
     Ui::Room *ui;
 };
 

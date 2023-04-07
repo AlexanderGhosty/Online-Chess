@@ -21,6 +21,7 @@ public:
 
     ChessPiece(Type type, Team team);
 
+    void setTeam(Team team);
     void setNewPos(int posX, int posY);
     void setSelectMode(bool selectMode);
     bool isSelected() const;
