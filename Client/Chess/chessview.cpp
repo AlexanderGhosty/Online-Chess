@@ -3,7 +3,8 @@
 ChessView::ChessView(QWidget *parent)
     : QGraphicsView(parent)
 {
-    setScene(new ChessBoard());
+    board = new ChessBoard();
+    setScene(board);
     setRenderHint(QPainter::Antialiasing);
     setMinimumSize(400, 400);
 }

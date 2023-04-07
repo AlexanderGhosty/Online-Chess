@@ -1,4 +1,3 @@
-
 #ifndef CHESSVIEW_H
 #define CHESSVIEW_H
 
@@ -10,6 +9,7 @@ class ChessView : public QGraphicsView
 {
 public:
     ChessView(QWidget *parent = nullptr);
+    ChessBoard* board;
 };
 
 

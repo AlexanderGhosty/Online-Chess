@@ -3,6 +3,7 @@
 
 #include "chessview.h"
 #include <QWidget>
+#include "chesspiece.h"
 
 
 namespace Ui {

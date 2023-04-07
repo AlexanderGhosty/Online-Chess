@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     chessboard.cpp \
+    chesspiece.cpp \
     chesssquare.cpp \
     chessview.cpp \
     main.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     chessboard.h \
+    chesspiece.h \
     chesssquare.h \
     chessview.h \
     mainwindow.h \
