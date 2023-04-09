@@ -9,6 +9,7 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
+#include <future>
 
 // Server
 #pragma comment(lib, "ws2_32.lib")
@@ -17,8 +18,9 @@
 //Custom
 #include "User.h"
 #include "server_functions.h"
+#include "ServerData.h"
 
-constexpr int MAX_PLAYERS = 16;
+//constexpr int MAX_PLAYERS = 16;
 
 int main()
 {
@@ -70,15 +72,14 @@ int main()
         std::cout << "listen() is OK, Waiting for connections" << std::endl;
     }
     
-    // Creating an array of users
-    Users users;
+    ServerData serverData;
 
     // Connection process
     SOCKET newConnection;
     while (true)
     {
         // Limiting the maximum number of users
-        if (users.get_size() > MAX_PLAYERS)
+        if (serverData.is_full())
         {
             // Sleep for 5 seconds.
             std::this_thread::sleep_for(std::chrono::seconds(5));
@@ -95,7 +96,8 @@ int main()
             else
             {
                 std::cout << "User connected!" << std::endl;
-                users.add_user(newConnection);
+                User user(newConnection);
+                std::async(std::launch::async, userHandler, user, std::ref(serverData));
             }
         }
     }

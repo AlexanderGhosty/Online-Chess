@@ -1,4 +1,7 @@
 #pragma once
+#include "User.h"
+#include "ServerData.h"
 
-void acceptConnection();
+
+void userHandler(User user, ServerData& serverData);
 //void listener
