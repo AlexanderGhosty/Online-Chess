@@ -24,7 +24,7 @@ int main()
 {
 	WSADATA wsaData;
 	WORD DLLVersion = MAKEWORD(2, 2);
-    // Проверка версии DLL
+    // Checking the DLL version
     if (WSAStartup(DLLVersion, &wsaData) != 0)
     {
         std::cout << "The Winsock DLL not found" << std::endl;
@@ -36,18 +36,18 @@ int main()
         std::cout << "The status: " << wsaData.szSystemStatus << std::endl;
     }
    
-    // Создание сокета и выбор TCP
+    // Socket creation and TCP selection
     SOCKET serverListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 
-    // Адрес сокета
+    // Socket address
     sockaddr_in serverAddr;
     int sizeOfserverAddr = sizeof(serverAddr);
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
     serverAddr.sin_port = htons(8080);
     serverAddr.sin_family = AF_INET;
 
-    // Ассоциация локального адреса и сокета (привязка адреса и порта)
+    // Local address and socket association (address and port binding)
     if (bind(serverListen, (SOCKADDR*)&serverAddr, sizeOfserverAddr) == SOCKET_ERROR)
     {
         std::cout << "bind failed " << WSAGetLastError() << std::endl;
@@ -60,7 +60,7 @@ int main()
         std::cout << "bind() is OK" << std::endl;
     }
 
-    // Прослушивание в поисках подключения
+    // Listening in search of connection
     if (listen(serverListen, SOMAXCONN) == SOCKET_ERROR)
     {
         std::cout << "listen(): Error listening on socket " << WSAGetLastError() << std::endl;
@@ -70,22 +70,22 @@ int main()
         std::cout << "listen() is OK, Waiting for connections" << std::endl;
     }
     
-    // Создание массива пользователей
+    // Creating an array of users
     Users users;
 
-    // Процесс подключения
+    // Connection process
     SOCKET newConnection;
     while (true)
     {
-        // Ограничение макс. числа пользователей
+        // Limiting the maximum number of users
         if (users.get_size() > MAX_PLAYERS)
         {
-            // Сон на 5 сек.
+            // Sleep for 5 seconds.
             std::this_thread::sleep_for(std::chrono::seconds(5));
         }
         else
         {
-            // Принятие подключения
+            // Accepting the connection
             newConnection = accept(serverListen, (SOCKADDR*)&serverAddr, &sizeOfserverAddr);
 
             if (newConnection == 0)

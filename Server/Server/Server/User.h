@@ -10,7 +10,7 @@ private:
 	{
 	public:
 		SOCKET socket;
-		int roomId;
+		int room_id;
 		User(SOCKET& socket);
 	};
 
