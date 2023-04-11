@@ -5,3 +5,8 @@ ChessSquare::ChessSquare(QColor color, int x, int y, int size)
 {
     setBrush(brush);
 }
+
+QBrush ChessSquare::getBrush()
+{
+    return this->brush;
+}

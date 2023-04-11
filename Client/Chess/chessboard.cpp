@@ -15,6 +15,7 @@ ChessBoard::ChessBoard()
                 color = Qt::gray;
             }
             ChessSquare *square = new ChessSquare(color, x, y, size);
+            square->setZValue(0.0);
             addItem(square);
             squares.append(square);
             x += size;

@@ -13,11 +13,15 @@ Room::Room(QWidget *parent) :
     ui->plateLayout->addWidget(view);
     view->setMaximumSize(450,450);
 
-    ChessPiece* piece = new ChessPiece(ChessPiece::Type::Pawn, ChessPiece::Team::White);
+    // ChessPiece* piece = new ChessPiece(ChessPiece::Team::White);
     /*QPixmap pixmap;
     pixmap.load("C:/Programming/GitHub/Online-Chess/Client/Chess/imageswhite_pawn.png");
     piece->setPixmap(pixmap);*/
+
+    PiecePawn *piece = new PiecePawn(PiecePawn::Team::Black);
+
     piece->setPos(0,0);
+    piece->setParent(view->board);
     view->board->addItem(piece);
 }
 

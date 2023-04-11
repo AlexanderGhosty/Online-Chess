@@ -15,6 +15,7 @@ SOURCES += \
     chessview.cpp \
     main.cpp \
     mainwindow.cpp \
+    piecepawn.cpp \
     room.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     chesssquare.h \
     chessview.h \
     mainwindow.h \
+    piecepawn.h \
     room.h
 
 FORMS += \
@@ -33,3 +35,9 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    images/white_pawn.png
+
+RESOURCES += \
+    resource.qrc

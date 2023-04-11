@@ -9,7 +9,7 @@
 #include <qobject.h>
 #include "chesssquare.h"
 #include <QDebug>
-
+#include <vector>
 
 
 class ChessPiece : public QGraphicsPixmapItem, public QObject
@@ -19,10 +19,13 @@ public:
 
     enum class Team { White, Black };
 
-    ChessPiece(Type type, Team team);
+    // ChessPiece(Team team);
+    ChessPiece();
 
+    void setType(Type type);
     void setTeam(Team team);
     void setNewPos(int posX, int posY);
+    std::pair<int, int> getPosPiece();
     void setSelectMode(bool selectMode);
     bool isSelected() const;
 
@@ -30,7 +33,13 @@ public:
     Team getTeam() const;
     std::pair<int, int> getPos();
 
-    void calculateMoves();
+
+
+    virtual void calculateMoves() = 0;
+
+    void addMoveSquare(ChessSquare* moveSquare);
+    std::vector <ChessSquare*> getMoveSquares();
+
 
 
 private:
@@ -41,6 +50,7 @@ private:
     bool selected;
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
+    std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
 
 
 protected:

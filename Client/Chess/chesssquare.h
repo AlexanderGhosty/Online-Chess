@@ -9,6 +9,8 @@ class ChessSquare : public QGraphicsRectItem
 {
 public:
     ChessSquare(QColor color, int x, int y, int size);
+    QBrush getBrush();
+
 
 private:
     QBrush brush;
