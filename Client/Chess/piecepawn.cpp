@@ -10,9 +10,11 @@ PiecePawn::PiecePawn(Team team)
     //pixmap.fill(Qt::red);
     //setPixmap(pixmap);
 
-    QPixmap pix(":/images/images/white_pawn.png");
+    QPixmap pix(":/images/images/black_pawn.png");
     this->setZValue(2.0);
     this->setPixmap(pix.scaled(50, 50, Qt::KeepAspectRatio));
+
+    setZeroMovesAMount();
 }
 
 void PiecePawn::calculateMoves()
@@ -21,17 +23,43 @@ void PiecePawn::calculateMoves()
     if (getTeam() == Team::White) {
         qDebug();
     } else {
-        qDebug();
         if (getPosPiece().second <= 6) {
-            qDebug() << "Вы сможете сходить на:" << getPosPiece().second + 1;
-            ChessSquare *square = new ChessSquare(Qt::green,
-                                                  getPosPiece().first * 50,
-                                                  (getPosPiece().second + 1) * 50,
-                                                  50);
-            addMoveSquare(square);
-            qDebug() << getMoveSquares();
-            square->setZValue(1.0);
-            this->scene()->addItem(square);
+
+            int moveLength;
+            if(getMovesAmount() == 0){
+                moveLength = 2;
+            }
+            else{
+                moveLength = 1;
+            }
+            QList<QGraphicsItem *> items = this->scene()->items(
+                QPointF(getPosPiece().first * 50 + 25,
+                        (getPosPiece().second + moveLength) * 50 + 25));
+
+            qDebug() << "x y move" << getPosPiece().first << getPosPiece().second << moveLength;
+            qDebug() << "mapToParent"
+                     << QPointF(getPosPiece().first * 50 + 25,
+                                (getPosPiece().second + moveLength) * 50 + 25);
+
+            ChessPiece *chessPiece = nullptr;
+
+            for (QGraphicsItem *item : items) {
+                chessPiece = dynamic_cast<ChessPiece *>(item);
+                if (chessPiece) {
+                    break;
+                }
+            }
+
+            if((chessPiece && chessPiece->getTeam() != this->getTeam()) || !chessPiece){
+                ChessSquare *square = new ChessSquare(Qt::green,
+                                                      getPosPiece().first * 50,
+                                                      (getPosPiece().second + moveLength) * 50,
+                                                      50);
+                addMoveSquare(square);
+                qDebug() << "ЩА МОЖЕМ ХОДИТЬ";
+                square->setZValue(1.0);
+                this->scene()->addItem(square);
+            }
         }
     }
 }

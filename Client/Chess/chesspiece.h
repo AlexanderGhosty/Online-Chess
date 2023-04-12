@@ -40,6 +40,9 @@ public:
     void addMoveSquare(ChessSquare* moveSquare);
     std::vector <ChessSquare*> getMoveSquares();
 
+    int getMovesAmount();
+    void setZeroMovesAMount();
+    void addAMove();
 
 
 private:
@@ -51,7 +54,7 @@ private:
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
-
+    int movesAmount;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

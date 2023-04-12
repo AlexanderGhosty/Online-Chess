@@ -20,9 +20,15 @@ Room::Room(QWidget *parent) :
 
     PiecePawn *piece = new PiecePawn(PiecePawn::Team::Black);
 
-    piece->setPos(0,0);
+    piece->setNewPos(0,0);
     piece->setParent(view->board);
     view->board->addItem(piece);
+
+    PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
+
+    piece1->setNewPos(0,200);
+    piece1->setParent(view->board);
+    view->board->addItem(piece1);
 }
 
 Room::~Room()

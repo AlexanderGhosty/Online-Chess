@@ -79,6 +79,19 @@ std::vector<ChessSquare*> ChessPiece::getMoveSquares()
     return this->moveSquares;
 }
 
+
+int ChessPiece::getMovesAmount(){
+    return this->movesAmount;
+}
+
+void ChessPiece::setZeroMovesAMount(){
+    this->movesAmount = 0;
+}
+
+void ChessPiece::addAMove(){
+    ++this->movesAmount;
+}
+
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     m_startPos = pos();
     m_isDragging = true;
@@ -147,6 +160,7 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             // setPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
             // setNewPos((int) center.x() / 50, (int) center.y() / 50); // square size is 50
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
+            addAMove();
             qDebug() << "new position of an obj" << posX << posY;
             qDebug()
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"
