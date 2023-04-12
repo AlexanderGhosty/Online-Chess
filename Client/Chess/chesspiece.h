@@ -10,6 +10,7 @@
 #include "chesssquare.h"
 #include <QDebug>
 #include <vector>
+#include "room.h"
 
 
 class ChessPiece : public QGraphicsPixmapItem, public QObject
@@ -39,8 +40,17 @@ public:
 
     void addMoveSquare(ChessSquare* moveSquare);
     std::vector <ChessSquare*> getMoveSquares();
+<<<<<<< Updated upstream
 
+    int getMovesMade();
+    void addMoveAmount();
+    void setZeroMoves();
+=======
+    void addAMove();
+    int getMoveAmount();
+    void setZeroMoveAmount();
 
+>>>>>>> Stashed changes
 
 private:
     int posX;
@@ -51,6 +61,11 @@ private:
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
+<<<<<<< Updated upstream
+    int movesMade;
+=======
+    int moveAmount;
+>>>>>>> Stashed changes
 
 
 protected:

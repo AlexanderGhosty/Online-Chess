@@ -19,10 +19,24 @@ Room::Room(QWidget *parent) :
     piece->setPixmap(pixmap);*/
 
     PiecePawn *piece = new PiecePawn(PiecePawn::Team::Black);
+<<<<<<< Updated upstream
+    piece->setNewPos(0,0);
+=======
 
-    piece->setPos(0,0);
+    piece->setNewPos(0,0);
     piece->setParent(view->board);
+>>>>>>> Stashed changes
     view->board->addItem(piece);
+
+    PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
+    piece1->setNewPos(0,150);
+<<<<<<< Updated upstream
+    view->board->addItem(piece1);
+
+=======
+    piece1->setParent(view->board);
+    view->board->addItem(piece1);
+>>>>>>> Stashed changes
 }
 
 Room::~Room()
