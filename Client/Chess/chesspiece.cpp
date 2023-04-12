@@ -81,6 +81,7 @@ std::vector<ChessSquare*> ChessPiece::getMoveSquares()
     return this->moveSquares;
 }
 
+<<<<<<< Updated upstream
 
 int ChessPiece::getMovesMade()
 {
@@ -99,6 +100,20 @@ void ChessPiece::setZeroMoves()
 
 
 
+=======
+void ChessPiece::addAMove(){
+    ++this->moveAmount;
+}
+
+int ChessPiece::getMoveAmount(){
+    return this->moveAmount;
+}
+
+void ChessPiece::setZeroMoveAmount(){
+    this->moveAmount = 0;
+}
+
+>>>>>>> Stashed changes
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     m_startPos = pos();
     m_isDragging = true;
@@ -164,8 +179,12 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         qDebug() << "center " << center << (int) center.x();
         if (square->mapToParent(center) != m_startPos) {
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
+<<<<<<< Updated upstream
             addMoveAmount();
 
+=======
+            addAMove();
+>>>>>>> Stashed changes
             qDebug() << "new position of an obj" << posX << posY;
             qDebug()
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"
