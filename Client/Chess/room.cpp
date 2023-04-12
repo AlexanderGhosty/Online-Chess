@@ -19,10 +19,13 @@ Room::Room(QWidget *parent) :
     piece->setPixmap(pixmap);*/
 
     PiecePawn *piece = new PiecePawn(PiecePawn::Team::Black);
-
-    piece->setPos(0,0);
-    piece->setParent(view->board);
+    piece->setNewPos(0,0);
     view->board->addItem(piece);
+
+    PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
+    piece1->setNewPos(0,150);
+    view->board->addItem(piece1);
+
 }
 
 Room::~Room()
