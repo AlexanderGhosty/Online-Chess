@@ -14,6 +14,8 @@ ChessPiece::ChessPiece(Team team):
 
 }*/
 
+
+
 // bool canMoveTo(int posX, int posY);
 
 ChessPiece::ChessPiece(){
@@ -79,6 +81,39 @@ std::vector<ChessSquare*> ChessPiece::getMoveSquares()
     return this->moveSquares;
 }
 
+<<<<<<< Updated upstream
+
+int ChessPiece::getMovesMade()
+{
+    return this->movesMade;
+}
+
+void ChessPiece::addMoveAmount()
+{
+    ++this->movesMade;
+}
+
+void ChessPiece::setZeroMoves()
+{
+    this->movesMade = 0;
+}
+
+
+
+=======
+void ChessPiece::addAMove(){
+    ++this->moveAmount;
+}
+
+int ChessPiece::getMoveAmount(){
+    return this->moveAmount;
+}
+
+void ChessPiece::setZeroMoveAmount(){
+    this->moveAmount = 0;
+}
+
+>>>>>>> Stashed changes
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     m_startPos = pos();
     m_isDragging = true;
@@ -143,10 +178,13 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         QPointF center = square->rect().topLeft();
         qDebug() << "center " << center << (int) center.x();
         if (square->mapToParent(center) != m_startPos) {
-            // setPos(square->mapToParent(center));
-            // setPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
-            // setNewPos((int) center.x() / 50, (int) center.y() / 50); // square size is 50
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
+<<<<<<< Updated upstream
+            addMoveAmount();
+
+=======
+            addAMove();
+>>>>>>> Stashed changes
             qDebug() << "new position of an obj" << posX << posY;
             qDebug()
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"

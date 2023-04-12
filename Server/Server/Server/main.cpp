@@ -29,7 +29,7 @@ int main()
     // Checking the DLL version
     if (WSAStartup(DLLVersion, &wsaData) != 0)
     {
-        std::cout << "The Winsock DLL not found" << std::endl;
+        std::cout << "The Winsock DLL not found " << std::endl;
         return 1;
     }
     else
@@ -78,7 +78,7 @@ int main()
     SOCKET newConnection;
     while (true)
     {
-        // Limiting the maximum number of users
+        // Checking for availability of slots
         if (serverData.is_full())
         {
             // Sleep for 5 seconds.
@@ -95,7 +95,7 @@ int main()
             }
             else
             {
-                std::cout << "User connected!" << std::endl;
+                std::cout << "User connected! " << newConnection << std::endl;
                 User user(newConnection);
                 std::async(std::launch::async, userHandler, user, std::ref(serverData));
             }
