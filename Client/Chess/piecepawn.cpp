@@ -13,7 +13,6 @@ PiecePawn::PiecePawn(Team team)
     QPixmap pix(":/images/images/black_pawn.png");
     this->setZValue(2.0);
     this->setPixmap(pix.scaled(50, 50, Qt::KeepAspectRatio));
-
     setZeroMovesAMount();
 }
 

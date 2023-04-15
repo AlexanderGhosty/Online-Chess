@@ -13,6 +13,7 @@ SOURCES += \
     chesspiece.cpp \
     chesssquare.cpp \
     chessview.cpp \
+    gamestate.cpp \
     main.cpp \
     mainwindow.cpp \
     piecepawn.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     chesspiece.h \
     chesssquare.h \
     chessview.h \
+    gamestate.h \
     mainwindow.h \
     piecepawn.h \
     room.h

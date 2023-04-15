@@ -37,13 +37,18 @@ public:
 
     virtual void calculateMoves() = 0;
 
+    // places where a chesspiece can move
     void addMoveSquare(ChessSquare* moveSquare);
     std::vector <ChessSquare*> getMoveSquares();
 
+    // moves
     int getMovesAmount();
     void setZeroMovesAMount();
     void addAMove();
 
+    // id features
+    //int GetID() const;
+    //void setId();
 
 private:
     int posX;
@@ -55,6 +60,10 @@ private:
     bool m_isDragging = false;
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
     int movesAmount;
+
+    static int idCount;
+    int m_id;
+
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
