@@ -17,6 +17,7 @@ ChessPiece::ChessPiece(Team team):
 // bool canMoveTo(int posX, int posY);
 
 ChessPiece::ChessPiece(){
+
 }
 
 void ChessPiece::setType(Type type)
@@ -90,13 +91,19 @@ void ChessPiece::setZeroMovesAMount(){
 void ChessPiece::addAMove(){
     ++this->movesAmount;
 }
-/*
-int ChessPiece::GetID() const{
+
+int ChessPiece::getID(){
     return m_id;
 }
-void ChessPiece::setId(){
-    ++idCount;
-}*/
+
+void ChessPiece::setGameState(GameState gameState){
+    this->gameState = gameState;
+}
+
+GameState ChessPiece::getGameState(){
+    return gameState;
+}
+
 
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     m_startPos = pos();

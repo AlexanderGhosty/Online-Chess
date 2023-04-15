@@ -5,7 +5,6 @@ PiecePawn::PiecePawn(Team team)
 {
     setTeam(team);
     setType(Type::Pawn);
-
     //QPixmap pixmap(50, 50);
     //pixmap.fill(Qt::red);
     //setPixmap(pixmap);

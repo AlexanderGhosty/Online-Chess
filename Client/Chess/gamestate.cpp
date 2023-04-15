@@ -14,6 +14,7 @@ GameState::GameState()
 {
     yourTeam = StateTeam::White;
     positions.resize(2, std::vector<std::pair<int, int>>(16));
+    pieceIdCounter = 0;
 }
 
 GameState::StateTeam GameState::getYourTeam(){
@@ -35,4 +36,16 @@ void GameState::changeTeamToMove(){
     else{
         this->teamToMove = StateTeam::Black;
     }
+}
+/*
+void changePieceIdCounter();
+int getPieceIdCounter();
+*/
+
+void GameState::changePieceIdCounter(){
+    ++pieceIdCounter;
+}
+
+int GameState::getPieceIdCounter(){
+    return pieceIdCounter;
 }

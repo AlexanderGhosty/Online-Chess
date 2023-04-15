@@ -25,11 +25,16 @@ public:
     StateTeam getTeamToMove();
     void changeTeamToMove();
 
+    // id
+    void changePieceIdCounter();
+    int getPieceIdCounter();
+
 
 private:
     std::vector<std::vector<std::pair<int, int>>> positions;
     StateTeam yourTeam;
     StateTeam teamToMove;
+    int pieceIdCounter;
 
 };
 

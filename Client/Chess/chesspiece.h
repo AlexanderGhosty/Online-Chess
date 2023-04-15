@@ -10,7 +10,7 @@
 #include "chesssquare.h"
 #include <QDebug>
 #include <vector>
-
+#include "gamestate.h"
 
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
@@ -47,8 +47,12 @@ public:
     void addAMove();
 
     // id features
-    //int GetID() const;
-    //void setId();
+    int getID();
+    void setId();
+
+    // game state
+    void setGameState(GameState gameState);
+    GameState getGameState();
 
 private:
     int posX;
@@ -60,10 +64,8 @@ private:
     bool m_isDragging = false;
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
     int movesAmount;
-
-    static int idCount;
     int m_id;
-
+    GameState gameState;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
