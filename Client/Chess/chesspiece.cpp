@@ -96,16 +96,19 @@ int ChessPiece::getID(){
     return m_id;
 }
 
-void ChessPiece::setGameState(GameState gameState){
+void ChessPiece::setGameState(GameState* gameState){
     this->gameState = gameState;
 }
 
-GameState ChessPiece::getGameState(){
+GameState* ChessPiece::getGameState(){
     return gameState;
 }
 
 
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    qDebug() << "mousePressEvent";
+    //if(static_cast<int>(getTeam()) != static_cast<int>(getGameState()->getTeamToMove()))
+    //    return;
     m_startPos = pos();
     m_isDragging = true;
     // QGraphicsItem::mousePressEvent(event);
@@ -117,7 +120,7 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {
         // setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);
-
+        qDebug() << "mouseMoveEvent";
         QPointF newPos = event->scenePos();
 
         // ?????????? ??????? ????? ? ??????? ???????
@@ -150,6 +153,8 @@ void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    if(!m_isDragging)
+        return;
     m_isDragging = false;
     // Get a list of colliding items
     QList<QGraphicsItem*> items = scene()->items(mapToScene(event->pos()));

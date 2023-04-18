@@ -51,8 +51,8 @@ public:
     void setId();
 
     // game state
-    void setGameState(GameState gameState);
-    GameState getGameState();
+    void setGameState(GameState* gameState);
+    GameState* getGameState();
 
 private:
     int posX;
@@ -65,7 +65,7 @@ private:
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
     int movesAmount;
     int m_id;
-    GameState gameState;
+    GameState* gameState;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

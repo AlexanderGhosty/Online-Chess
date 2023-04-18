@@ -14,6 +14,7 @@ GameState::GameState()
 {
     yourTeam = StateTeam::White;
     positions.resize(2, std::vector<std::pair<int, int>>(16));
+    teamToMove = StateTeam::White; // потом исправить. Сейчасд для тестов
     pieceIdCounter = 0;
 }
 
