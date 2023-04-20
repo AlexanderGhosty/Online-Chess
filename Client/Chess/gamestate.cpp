@@ -50,3 +50,16 @@ void GameState::changePieceIdCounter(){
 int GameState::getPieceIdCounter(){
     return pieceIdCounter;
 }
+
+std::vector<std::vector<std::pair<int, int>>> GameState::getGameStatePositions(){
+    return this->positions;
+}
+
+void GameState::changeGameStatePosition(GameState::StateTeam team, int id, int x, int y){
+    if(team == StateTeam::White){
+        positions[0][id] = std::make_pair(x, y);
+    }
+    else{
+        positions[1][id] = std::make_pair(x, y);
+    }
+}

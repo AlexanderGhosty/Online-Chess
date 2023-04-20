@@ -29,6 +29,9 @@ public:
     void changePieceIdCounter();
     int getPieceIdCounter();
 
+    // positions
+    std::vector<std::vector<std::pair<int, int>>> getGameStatePositions();
+    void changeGameStatePosition(StateTeam team, int id,int x, int y);
 
 private:
     std::vector<std::vector<std::pair<int, int>>> positions;

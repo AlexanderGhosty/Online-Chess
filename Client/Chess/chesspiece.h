@@ -17,20 +17,20 @@ class ChessPiece : public QGraphicsPixmapItem, public QObject
 public:
     enum class Type{ Pawn };
 
-    enum class Team { White, Black };
+    //enum class Team { White, Black };
 
     // ChessPiece(Team team);
     ChessPiece();
 
     void setType(Type type);
-    void setTeam(Team team);
+    void setTeam(GameState::StateTeam team);
     void setNewPos(int posX, int posY);
     std::pair<int, int> getPosPiece();
     void setSelectMode(bool selectMode);
     bool isSelected() const;
 
     Type getType() const;
-    Team getTeam() const;
+    GameState::StateTeam getTeam() const;
     std::pair<int, int> getPos();
 
 
@@ -48,7 +48,7 @@ public:
 
     // id features
     int getID();
-    void setId();
+    void setId(int m_id);
 
     // game state
     void setGameState(GameState* gameState);
@@ -58,7 +58,7 @@ private:
     int posX;
     int posY;
     Type type;
-    Team team;
+    GameState::StateTeam team;
     bool selected;
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;

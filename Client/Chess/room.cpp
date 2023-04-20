@@ -15,26 +15,29 @@ Room::Room(QWidget *parent) :
     // qDebug() << "3";
     view->setMaximumSize(450,450);
 
-    // ChessPiece* piece = new ChessPiece(ChessPiece::Team::White);
-    /*QPixmap pixmap;
-    pixmap.load("C:/Programming/GitHub/Online-Chess/Client/Chess/imageswhite_pawn.png");
-    piece->setPixmap(pixmap);*/
-    // qDebug() << "4";
-    GameState* state;
-    PiecePawn *piece = new PiecePawn(PiecePawn::Team::Black);
+
+    GameState* state = new GameState();
+    PiecePawn *piece = new PiecePawn(GameState::StateTeam::Black);
     piece->setGameState(state);
-    // qDebug() << "5";
-    piece->setNewPos(0,0);
-    // qDebug() << "6";
+    piece->setNewPos(50, 0);
     piece->setParent(view->board);
-    // qDebug() << "7";
+    piece->setId(state->getPieceIdCounter());
+    state->changePieceIdCounter();
     view->board->addItem(piece);
-    // qDebug() << "8";
-    PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::White);
+    PiecePawn *piece1 = new PiecePawn(GameState::StateTeam::White);
     piece1->setGameState(state);
-    piece1->setNewPos(0,350);
+    piece1->setNewPos(0, 350);
     piece1->setParent(view->board);
+    piece1->setId(state->getPieceIdCounter());
+    state->changePieceIdCounter();
     view->board->addItem(piece1);
+    PiecePawn *piece2 = new PiecePawn(GameState::StateTeam::White);
+    piece2->setGameState(state);
+    piece2->setNewPos(100, 350);
+    piece2->setParent(view->board);
+    piece2->setId(state->getPieceIdCounter());
+    state->changePieceIdCounter();
+    view->board->addItem(piece2);
 }
 
 Room::~Room()

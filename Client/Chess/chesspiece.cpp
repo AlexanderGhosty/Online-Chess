@@ -25,13 +25,21 @@ void ChessPiece::setType(Type type)
     this->type = type;
 }
 
-void ChessPiece::setTeam(Team team)
+void ChessPiece::setTeam(GameState::StateTeam team)
 {
     this->team = team;
 }
 
 void ChessPiece::setNewPos(int posX, int posY)
 {
+    getGameState()->changeGameStatePosition(getTeam(), getID(), posX / 50, posY / 50);
+    if(posX < 0 || posY < 0){
+        qDebug() << "killed piece" << getID();
+        this->setVisible(false);
+        this->setEnabled(false);
+        // getGameState()->
+        return;
+    }
     this->posX = posX / 50;
     this->posY = posY / 50;
     setPos(posX, posY);
@@ -57,7 +65,7 @@ std::pair<int, int> ChessPiece::getPosPiece()
     return std::make_pair(this->posX, this->posY);
 }
 
-ChessPiece::Team ChessPiece::getTeam() const
+GameState::StateTeam ChessPiece::getTeam() const
 {
     return this->team;
 }
@@ -104,11 +112,16 @@ GameState* ChessPiece::getGameState(){
     return gameState;
 }
 
+void ChessPiece::setId(int m_id){
+    this->m_id = m_id;
+}
+
 
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    if(getTeam() != getGameState()->getTeamToMove())
+        return;
     qDebug() << "mousePressEvent";
-    //if(static_cast<int>(getTeam()) != static_cast<int>(getGameState()->getTeamToMove()))
-    //    return;
+    getGameState()->getTeamToMove();
     m_startPos = pos();
     m_isDragging = true;
     // QGraphicsItem::mousePressEvent(event);
@@ -120,7 +133,7 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {
         // setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);
-        qDebug() << "mouseMoveEvent";
+        // qDebug() << "mouseMoveEvent";
         QPointF newPos = event->scenePos();
 
         // ?????????? ??????? ????? ? ??????? ???????
@@ -172,13 +185,35 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     if (square && square->getBrush() == Qt::green) { // If the chess piece is over a valid square
         // Snap the chess piece to the center of the square
         QPointF center = square->rect().topLeft();
-        qDebug() << "center " << center << (int) center.x();
+        qDebug() << "center " << center << center.x() << center.y();
         if (square->mapToParent(center) != m_startPos) {
-            // setPos(square->mapToParent(center));
-            // setPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
-            // setNewPos((int) center.x() / 50, (int) center.y() / 50); // square size is 50
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
+
+            // killing enemy
+            QList<QGraphicsItem *> items = this->scene()->items(QPointF(square->mapToParent(center).x() + 25, square->mapToParent(center).y() + 25));
+
+            ChessPiece *chessPiece = nullptr;
+
+            for (QGraphicsItem *item : items) {
+                chessPiece = dynamic_cast<ChessPiece *>(item);
+                if (chessPiece && chessPiece->getTeam() != getGameState()->getTeamToMove()) {
+                    qDebug() << "нашел";
+                    break;
+                }
+            }
+
+            if(chessPiece!= nullptr){ // if can kill a piece
+                //chessPiece->setActive(false); // might be in SetNewPos method (-1 pos check)
+                chessPiece->setNewPos(-1, 0);
+            }
+            else{
+                delete chessPiece;
+            }
+
             addAMove();
+            getGameState()->changeTeamToMove();
+
+
             qDebug() << "new position of an obj" << posX << posY;
             qDebug()
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"
@@ -194,12 +229,9 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         setPos(m_startPos);
     }
     setSelectMode(false);
-    for (auto it = this->moveSquares.begin(); it != this->moveSquares.end();) {
-        delete *it;
-        it = this->moveSquares.erase(it);
-        if (it != this->moveSquares.end()) {
-            ++it; // переходим к следующему элементу, если он существует
-        }
+
+    for (auto i = 0; i < moveSquares.size(); ++i){
+        delete moveSquares[i];
     }
     this->moveSquares.clear();
 }
