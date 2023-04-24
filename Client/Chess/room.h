@@ -19,11 +19,13 @@ public:
     ~Room();
     ChessView *view;
     QScrollArea *scrollArea;
+    bool isObjectCreated() const;
 
 
 private:
     ChessPiece::Type teamToMove;
     Ui::Room *ui;
+    bool m_objectCreated;
 };
 
 #endif // ROOM_H

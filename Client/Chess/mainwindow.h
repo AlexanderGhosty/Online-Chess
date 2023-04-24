@@ -4,7 +4,10 @@
 
 #include <QMainWindow>
 #include "room.h"
-
+#include <QProgressDialog>
+#include <thread>
+#include <chrono>
+#include <future>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

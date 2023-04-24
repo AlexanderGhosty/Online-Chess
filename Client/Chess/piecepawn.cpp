@@ -94,24 +94,26 @@ void PiecePawn::calculateMoves()
                 }
             }
             items.clear();
-            items = this->scene()->items(
-                QPointF(getPosPiece().first * 50 + 75,
-                        (getPosPiece().second - 1) * 50 + 25));
+            if(getPosPiece().first < 7){
+                items = this->scene()->items(
+                    QPointF(getPosPiece().first * 50 + 75,
+                            (getPosPiece().second - 1) * 50 + 25)); // kill check right
 
-            for (QGraphicsItem *item : items) {
-                chessPiece = dynamic_cast<ChessPiece *>(item);
-                if (chessPiece) {
-                    break;
+                for (QGraphicsItem *item : items) {
+                    chessPiece = dynamic_cast<ChessPiece *>(item);
+                    if (chessPiece) {
+                        break;
+                    }
                 }
-            }
-            if(chessPiece && chessPiece->getTeam() != this->getTeam()){
-                ChessSquare *square = new ChessSquare(Qt::green,
-                                                      getPosPiece().first * 50 + 50,
-                                                      getPosPiece().second * 50 - 50,
-                                                      50);
-                addMoveSquare(square);
-                square->setZValue(1.0);
-                this->scene()->addItem(square);
+                if(chessPiece && chessPiece->getTeam() != this->getTeam()){
+                    ChessSquare *square = new ChessSquare(Qt::green,
+                                                          getPosPiece().first * 50 + 50,
+                                                          getPosPiece().second * 50 - 50,
+                                                          50);
+                    addMoveSquare(square);
+                    square->setZValue(1.0);
+                    this->scene()->addItem(square);
+                }
             }
         }
     } else { // BLACK
@@ -147,7 +149,7 @@ void PiecePawn::calculateMoves()
                 }
             }
             items.clear();
-            if(getPosPiece().first > 0){
+            if(getPosPiece().first > 0){ // kill check left side
                 items = this->scene()->items(
                     QPointF(getPosPiece().first * 50 - 25,
                             (getPosPiece().second + 1) * 50 + 25));
@@ -169,24 +171,26 @@ void PiecePawn::calculateMoves()
                 }
             }
             items.clear();
-            items = this->scene()->items(
-                QPointF(getPosPiece().first * 50 + 75,
-                        (getPosPiece().second + 1) * 50 + 25));
+            if(getPosPiece().first < 7){
+                items = this->scene()->items(
+                    QPointF(getPosPiece().first * 50 + 75,
+                            (getPosPiece().second + 1) * 50 + 25));
 
-            for (QGraphicsItem *item : items) {
-                chessPiece = dynamic_cast<ChessPiece *>(item);
-                if (chessPiece) {
-                    break;
+                for (QGraphicsItem *item : items) {
+                    chessPiece = dynamic_cast<ChessPiece *>(item);
+                    if (chessPiece) {
+                        break;
+                    }
                 }
-            }
-            if(chessPiece && chessPiece->getTeam() != this->getTeam()){
-                ChessSquare *square = new ChessSquare(Qt::green,
-                                                      getPosPiece().first * 50 + 50,
-                                                      getPosPiece().second * 50 + 50,
-                                                      50);
-                addMoveSquare(square);
-                square->setZValue(1.0);
-                this->scene()->addItem(square);
+                if(chessPiece && chessPiece->getTeam() != this->getTeam()){
+                    ChessSquare *square = new ChessSquare(Qt::green,
+                                                          getPosPiece().first * 50 + 50,
+                                                          getPosPiece().second * 50 + 50,
+                                                          50);
+                    addMoveSquare(square);
+                    square->setZValue(1.0);
+                    this->scene()->addItem(square);
+                }
             }
         }
     }

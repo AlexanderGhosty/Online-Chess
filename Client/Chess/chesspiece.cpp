@@ -32,12 +32,12 @@ void ChessPiece::setTeam(GameState::StateTeam team)
 
 void ChessPiece::setNewPos(int posX, int posY)
 {
-    getGameState()->changeGameStatePosition(getTeam(), getID(), posX / 50, posY / 50);
+    getGameState()->changeGameStatePosition(getTeam(), getID(), posX, posY);
+    qDebug() << "setNewPos: gamestate position changed";
     if(posX < 0 || posY < 0){
         qDebug() << "killed piece" << getID();
         this->setVisible(false);
         this->setEnabled(false);
-        // getGameState()->
         return;
     }
     this->posX = posX / 50;

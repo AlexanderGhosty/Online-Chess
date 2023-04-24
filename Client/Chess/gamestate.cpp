@@ -12,10 +12,10 @@
 
 GameState::GameState()
 {
-    yourTeam = StateTeam::White;
-    positions.resize(2, std::vector<std::pair<int, int>>(16));
-    teamToMove = StateTeam::White; // потом исправить. Сейчасд для тестов
+    yourTeam = StateTeam::White; // потом исправить. Сейчас для тестов
+    teamToMove = StateTeam::White;
     pieceIdCounter = 0;
+    positions.resize(2, std::vector<std::pair<int, int>>(16));
 }
 
 GameState::StateTeam GameState::getYourTeam(){
@@ -44,7 +44,7 @@ int getPieceIdCounter();
 */
 
 void GameState::changePieceIdCounter(){
-    ++pieceIdCounter;
+    pieceIdCounter = (pieceIdCounter + 1) % 16;
 }
 
 int GameState::getPieceIdCounter(){
