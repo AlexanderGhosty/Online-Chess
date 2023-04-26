@@ -75,6 +75,17 @@ Room::Room(QWidget *parent) :
         rook->setNewPos(i * 50 * 7, 50 * 7);
         view->board->addItem(rook);
     }
+
+    // ---- creating queen ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 1; ++i){
+        PieceQueen *queen = new PieceQueen(GameState::StateTeam::White);
+        queen->setGameState(state);
+        queen->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        queen->setNewPos(50 * 3, 50 * 7);
+        view->board->addItem(queen);
+    }
     qDebug() << "White team created";
 
 
@@ -111,6 +122,28 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         bishop->setNewPos(50 * 2 + i * 50 * 3, 0);
         view->board->addItem(bishop);
+    }
+
+    // ---- creating rook ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 2; ++i){
+        PieceRook *rook = new PieceRook(GameState::StateTeam::Black);
+        rook->setGameState(state);
+        rook->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        rook->setNewPos(i * 50 * 7, 0);
+        view->board->addItem(rook);
+    }
+
+    // ---- creating queen ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 1; ++i){
+        PieceQueen *queen = new PieceQueen(GameState::StateTeam::Black);
+        queen->setGameState(state);
+        queen->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        queen->setNewPos(50 * 3, 0);
+        view->board->addItem(queen);
     }
     qDebug() << "Black team created";
 

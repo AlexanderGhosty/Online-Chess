@@ -19,6 +19,7 @@ SOURCES += \
     piecebishop.cpp \
     pieceknight.cpp \
     piecepawn.cpp \
+    piecequeen.cpp \
     piecerook.cpp \
     room.cpp
 
@@ -32,6 +33,7 @@ HEADERS += \
     piecebishop.h \
     pieceknight.h \
     piecepawn.h \
+    piecequeen.h \
     piecerook.h \
     room.h
 

@@ -9,6 +9,7 @@
 #include "pieceknight.h"
 #include "piecebishop.h"
 #include "piecerook.h"
+#include "piecequeen.h"
 
 namespace Ui {
 class Room;
