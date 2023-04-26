@@ -29,6 +29,11 @@ Room::Room(QWidget *parent) :
     view->board->addItem(piece);
 */
 
+
+
+    // --------------------- CREATING WHITE TEAM ---------------------
+    // ---- creating pawn ----
+    qDebug() << state->getPieceIdCounter();
     for(int i = 0; i < 8; ++i){
         PiecePawn *pawn = new PiecePawn(GameState::StateTeam::White);
         pawn->setGameState(state);
@@ -37,6 +42,9 @@ Room::Room(QWidget *parent) :
         pawn->setNewPos(i * 50, 300);
         view->board->addItem(pawn);
     }
+
+    // ---- creating knight ----
+    qDebug() << state->getPieceIdCounter();
     for(int i = 0; i < 2; ++i){
         PieceKnight *knight = new PieceKnight(GameState::StateTeam::White);
         knight->setGameState(state);
@@ -45,23 +53,35 @@ Room::Room(QWidget *parent) :
         knight->setNewPos(50 + i * 50 * 5, 50 * 7);
         view->board->addItem(knight);
     }
+
+    // ---- creating bishop ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 2; ++i){
+        PieceBishop *bishop = new PieceBishop(GameState::StateTeam::White);
+        bishop->setGameState(state);
+        bishop->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        bishop->setNewPos(50 * 2 + i * 50 * 3, 50 * 7);
+        view->board->addItem(bishop);
+    }
     qDebug() << "White team created";
 
+
+    // --------------------- CREATING BLACK TEAM ---------------------
+    // ---- creating pawn ----
+    state->resetPieceIdCounter();
+    qDebug() << state->getPieceIdCounter();
     for(int i = 0; i < 8; ++i){
         PiecePawn *pawn = new PiecePawn(GameState::StateTeam::Black);
-        // qDebug() << "id:" << state->getPieceIdCounter();
-        // qDebug() << "0";
         pawn->setGameState(state);
-        // qDebug() << "1";
         pawn->setId(state->getPieceIdCounter());
-        // qDebug() << "2";
         state->changePieceIdCounter();
-        // qDebug() << "3";
         pawn->setNewPos(i * 50, 50);
-        // qDebug() << "4";
         view->board->addItem(pawn);
-        // qDebug() << i << "pawn created";
     }
+
+    // ---- creating knight ----
+    qDebug() <<  state->getPieceIdCounter();
     for(int i = 0; i < 2; ++i){
         PieceKnight *knight = new PieceKnight(GameState::StateTeam::Black);
         knight->setGameState(state);

@@ -116,21 +116,7 @@ void ChessPiece::setId(int m_id){
     this->m_id = m_id;
 }
 
-
-void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
-    if(getTeam() != getGameState()->getTeamToMove())
-        return;
-    qDebug() << "mousePressEvent";
-    getGameState()->getTeamToMove();
-    m_startPos = pos();
-    m_isDragging = true;
-    // QGraphicsItem::mousePressEvent(event);
-    qDebug() << "mousePressEvent";
-    setSelectMode(true);
-    calculateMoves();
-}
-
-void ChessPiece::tryMove(int x, int y){
+bool ChessPiece::tryMove(int x, int y){
     if(x >= 0 && y >= 0 && x <= 7 * 50 && y <= 7 * 50){
         QList<QGraphicsItem *> items = this->scene()->items(
             QPointF(x + 25, y + 25));
@@ -151,9 +137,34 @@ void ChessPiece::tryMove(int x, int y){
             addMoveSquare(square);
             square->setZValue(1.0);
             this->scene()->addItem(square);
+            if(!chessPiece){
+                return true;
+            }
+            return false;
+        }
+        else{
+            return false;
         }
     }
+    else{
+        return false;
+    }
 }
+
+
+void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    if(getTeam() != getGameState()->getTeamToMove())
+        return;
+    qDebug() << "mousePressEvent";
+    getGameState()->getTeamToMove();
+    m_startPos = pos();
+    m_isDragging = true;
+    // QGraphicsItem::mousePressEvent(event);
+    qDebug() << "mousePressEvent";
+    setSelectMode(true);
+    calculateMoves();
+}
+
 
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {

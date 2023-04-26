@@ -15,7 +15,7 @@
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
 public:
-    enum class Type{ Pawn, Knight };
+    enum class Type{ Pawn, Knight, Bishop };
 
     //enum class Team { White, Black };
 
@@ -45,7 +45,7 @@ public:
     int getMovesAmount();
     void setZeroMovesAMount();
     void addAMove();
-    void tryMove(int x, int y); // top left corner of a chess square
+    bool tryMove(int x, int y); // top left corner of a chess square
 
     // id features
     int getID();

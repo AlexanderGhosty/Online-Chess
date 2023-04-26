@@ -2,13 +2,13 @@
 #include "gamestate.h"
 
 
-// 0 - белые, 1 - Черные
-// 0, 1, 2, 3, 4, 5, 6, 7, 8 - пешки
-// 9, 10 - кони белых
-// 11, 12 - слоны
-// 13, 14 - ладья
-// 15 - ферзь
-// 16 - слон
+// 0 - white, 1 - black
+// 0, 1, 2, 3, 4, 5, 6, 7 - pawns
+// 8, 9 - knights
+// 10, 11 - bishops
+// 12, 13 - rooks
+// 14 - queen
+// 15 - king
 
 GameState::GameState()
 {
@@ -17,6 +17,9 @@ GameState::GameState()
     pieceIdCounter = 0;
     positions.resize(2, std::vector<std::pair<int, int>>(16));
 }
+
+
+// --------------------  team --------------------
 
 GameState::StateTeam GameState::getYourTeam(){
     return this->yourTeam;
@@ -38,22 +41,27 @@ void GameState::changeTeamToMove(){
         this->teamToMove = StateTeam::Black;
     }
 }
-/*
-void changePieceIdCounter();
-int getPieceIdCounter();
-*/
+
+
+//  -------------------- id --------------------
 
 void GameState::changePieceIdCounter(){
     pieceIdCounter = (pieceIdCounter + 1) % 16;
 }
 
 int GameState::getPieceIdCounter(){
-    return pieceIdCounter;
+    return this->pieceIdCounter;
 }
 
 std::vector<std::vector<std::pair<int, int>>> GameState::getGameStatePositions(){
     return this->positions;
 }
+
+void GameState::resetPieceIdCounter(){
+    this->pieceIdCounter = 0;
+}
+
+// -------------------- position --------------------
 
 void GameState::changeGameStatePosition(GameState::StateTeam team, int id, int x, int y){
     if(team == StateTeam::White){

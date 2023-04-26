@@ -4,9 +4,10 @@
 #include "chessview.h"
 #include <QWidget>
 
-#include "chesspiece.h"
+// #include "chesspiece.h"
 #include "piecepawn.h"
 #include "pieceknight.h"
+#include "piecebishop.h"
 
 namespace Ui {
 class Room;

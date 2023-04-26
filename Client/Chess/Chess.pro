@@ -16,6 +16,7 @@ SOURCES += \
     gamestate.cpp \
     main.cpp \
     mainwindow.cpp \
+    piecebishop.cpp \
     pieceknight.cpp \
     piecepawn.cpp \
     room.cpp
@@ -27,6 +28,7 @@ HEADERS += \
     chessview.h \
     gamestate.h \
     mainwindow.h \
+    piecebishop.h \
     pieceknight.h \
     piecepawn.h \
     room.h

@@ -5,7 +5,7 @@
 #include "chesspiece.h"
 
 
-class PieceKnight:public ChessPiece
+class PieceKnight : public ChessPiece
 {
 public:
     PieceKnight(GameState::StateTeam team);

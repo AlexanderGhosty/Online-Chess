@@ -28,7 +28,7 @@ public:
     // id
     void changePieceIdCounter();
     int getPieceIdCounter();
-
+    void resetPieceIdCounter();
     // positions
     std::vector<std::vector<std::pair<int, int>>> getGameStatePositions();
     void changeGameStatePosition(StateTeam team, int id,int x, int y);

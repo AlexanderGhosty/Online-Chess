@@ -4,7 +4,7 @@
 PieceKnight::PieceKnight(GameState::StateTeam team)
 {
     setTeam(team);
-    setType(Type::Knight);
+    setType(Type::Bishop);
 
     if(getTeam() == GameState::StateTeam::White){
         QPixmap pix(":/images/images/white_knight");
@@ -23,7 +23,7 @@ PieceKnight::PieceKnight(GameState::StateTeam team)
 void PieceKnight::calculateMoves(){
     if(getTeam() != getGameState()->getTeamToMove()) // !!! after tests need to check a your team !!!
         return;
-    qDebug() << "piece Knight calculating";
+    qDebug() << "piece knight calculating";
     std::pair<int, int> moveCoordinates; // scene coordinates (pixels)
 
     // top -> left
