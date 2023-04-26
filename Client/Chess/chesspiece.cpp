@@ -130,6 +130,31 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     calculateMoves();
 }
 
+void ChessPiece::tryMove(int x, int y){
+    if(x >= 0 && y >= 0 && x <= 7 * 50 && y <= 7 * 50){
+        QList<QGraphicsItem *> items = this->scene()->items(
+            QPointF(x + 25, y + 25));
+
+        ChessPiece *chessPiece = nullptr;
+
+        for (QGraphicsItem *item : items) {
+            chessPiece = dynamic_cast<ChessPiece *>(item);
+            if (chessPiece) {
+                break;
+            }
+        }
+
+        if((chessPiece && chessPiece->getTeam() != this->getTeam()) || !chessPiece){
+            ChessSquare *square = new ChessSquare(Qt::green,
+                                                  x, y,
+                                                  50);
+            addMoveSquare(square);
+            square->setZValue(1.0);
+            this->scene()->addItem(square);
+        }
+    }
+}
+
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {
         // setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);

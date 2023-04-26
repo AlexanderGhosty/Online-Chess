@@ -3,8 +3,10 @@
 
 #include "chessview.h"
 #include <QWidget>
+
 #include "chesspiece.h"
 #include "piecepawn.h"
+#include "pieceknight.h"
 
 namespace Ui {
 class Room;

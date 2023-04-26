@@ -28,6 +28,25 @@ Room::Room(QWidget *parent) :
     state->changePieceIdCounter();
     view->board->addItem(piece);
 */
+
+    for(int i = 0; i < 8; ++i){
+        PiecePawn *pawn = new PiecePawn(GameState::StateTeam::White);
+        pawn->setGameState(state);
+        pawn->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        pawn->setNewPos(i * 50, 300);
+        view->board->addItem(pawn);
+    }
+    for(int i = 0; i < 2; ++i){
+        PieceKnight *knight = new PieceKnight(GameState::StateTeam::White);
+        knight->setGameState(state);
+        knight->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        knight->setNewPos(50 + i * 50 * 5, 50 * 7);
+        view->board->addItem(knight);
+    }
+    qDebug() << "White team created";
+
     for(int i = 0; i < 8; ++i){
         PiecePawn *pawn = new PiecePawn(GameState::StateTeam::Black);
         // qDebug() << "id:" << state->getPieceIdCounter();
@@ -43,18 +62,17 @@ Room::Room(QWidget *parent) :
         view->board->addItem(pawn);
         // qDebug() << i << "pawn created";
     }
+    for(int i = 0; i < 2; ++i){
+        PieceKnight *knight = new PieceKnight(GameState::StateTeam::Black);
+        knight->setGameState(state);
+        knight->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        knight->setNewPos(50 + i * 50 * 5, 0);
+        view->board->addItem(knight);
+    }
 
     qDebug() << "Black team created";
 
-    for(int i = 0; i < 8; ++i){
-        PiecePawn *pawn = new PiecePawn(GameState::StateTeam::White);
-        pawn->setGameState(state);
-        pawn->setId(state->getPieceIdCounter());
-        state->changePieceIdCounter();
-        pawn->setNewPos(i * 50, 300);
-        view->board->addItem(pawn);
-    }
-    qDebug() << "White team created";
     m_objectCreated = true;
     qDebug() << "Constructor end";
 }

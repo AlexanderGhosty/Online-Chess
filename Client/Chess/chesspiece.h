@@ -15,7 +15,7 @@
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
 public:
-    enum class Type{ Pawn };
+    enum class Type{ Pawn, Knight };
 
     //enum class Team { White, Black };
 
@@ -45,6 +45,7 @@ public:
     int getMovesAmount();
     void setZeroMovesAMount();
     void addAMove();
+    void tryMove(int x, int y); // top left corner of a chess square
 
     // id features
     int getID();
@@ -55,14 +56,14 @@ public:
     GameState* getGameState();
 
 private:
-    int posX;
+    int posX; // cell position (not pixels)
     int posY;
     Type type;
     GameState::StateTeam team;
     bool selected;
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
-    std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
+    std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move to
     int movesAmount;
     int m_id;
     GameState* gameState;

@@ -61,7 +61,7 @@ void PiecePawn::calculateMoves()
                     }
                 }
 
-                if(!chessPiece){ // (chessPiece && chessPiece->getTeam() != this->getTeam()) ||
+                if(!chessPiece){
                     ChessSquare *square = new ChessSquare(Qt::green,
                                                           getPosPiece().first * 50,
                                                           (getPosPiece().second - moveLength) * 50,
