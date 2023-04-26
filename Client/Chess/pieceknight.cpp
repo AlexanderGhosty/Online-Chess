@@ -4,7 +4,7 @@
 PieceKnight::PieceKnight(GameState::StateTeam team)
 {
     setTeam(team);
-    setType(Type::Bishop);
+    setType(Type::Knight);
 
     if(getTeam() == GameState::StateTeam::White){
         QPixmap pix(":/images/images/white_knight");

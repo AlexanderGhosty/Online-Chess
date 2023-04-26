@@ -64,6 +64,17 @@ Room::Room(QWidget *parent) :
         bishop->setNewPos(50 * 2 + i * 50 * 3, 50 * 7);
         view->board->addItem(bishop);
     }
+
+    // ---- creating rook ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 2; ++i){
+        PieceRook *rook = new PieceRook(GameState::StateTeam::White);
+        rook->setGameState(state);
+        rook->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        rook->setNewPos(i * 50 * 7, 50 * 7);
+        view->board->addItem(rook);
+    }
     qDebug() << "White team created";
 
 
@@ -91,6 +102,16 @@ Room::Room(QWidget *parent) :
         view->board->addItem(knight);
     }
 
+    // ---- creating bishop ----
+    qDebug() << state->getPieceIdCounter();
+    for(int i = 0; i < 2; ++i){
+        PieceBishop *bishop = new PieceBishop(GameState::StateTeam::Black);
+        bishop->setGameState(state);
+        bishop->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        bishop->setNewPos(50 * 2 + i * 50 * 3, 0);
+        view->board->addItem(bishop);
+    }
     qDebug() << "Black team created";
 
     m_objectCreated = true;

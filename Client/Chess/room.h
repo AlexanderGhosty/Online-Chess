@@ -8,6 +8,7 @@
 #include "piecepawn.h"
 #include "pieceknight.h"
 #include "piecebishop.h"
+#include "piecerook.h"
 
 namespace Ui {
 class Room;
