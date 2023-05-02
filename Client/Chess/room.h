@@ -10,6 +10,7 @@
 #include "piecebishop.h"
 #include "piecerook.h"
 #include "piecequeen.h"
+#include "pieceking.h"
 
 namespace Ui {
 class Room;

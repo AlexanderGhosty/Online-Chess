@@ -78,13 +78,26 @@ Room::Room(QWidget *parent) :
 
     // ---- creating queen ----
     qDebug() << state->getPieceIdCounter();
-    for(int i = 0; i < 1; ++i){
+    for(;;){
         PieceQueen *queen = new PieceQueen(GameState::StateTeam::White);
         queen->setGameState(state);
         queen->setId(state->getPieceIdCounter());
         state->changePieceIdCounter();
         queen->setNewPos(50 * 3, 50 * 7);
         view->board->addItem(queen);
+        break;
+    }
+
+    // ---- creating king ----
+    qDebug() << state->getPieceIdCounter();
+    for(;;){
+        PieceKing *king = new PieceKing(GameState::StateTeam::White);
+        king->setGameState(state);
+        king->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        king->setNewPos(50 * 4, 50 * 7);
+        view->board->addItem(king);
+        break;
     }
     qDebug() << "White team created";
 
@@ -144,6 +157,18 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         queen->setNewPos(50 * 3, 0);
         view->board->addItem(queen);
+    }
+
+    // ---- creating king ----
+    qDebug() << state->getPieceIdCounter();
+    for(;;){
+        PieceKing *king = new PieceKing(GameState::StateTeam::Black);
+        king->setGameState(state);
+        king->setId(state->getPieceIdCounter());
+        state->changePieceIdCounter();
+        king->setNewPos(50 * 4, 0);
+        view->board->addItem(king);
+        break;
     }
     qDebug() << "Black team created";
 

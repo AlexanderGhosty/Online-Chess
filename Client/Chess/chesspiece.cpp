@@ -224,7 +224,6 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         qDebug() << "center " << center << center.x() << center.y();
         if (square->mapToParent(center) != m_startPos) {
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
-
             // killing enemy
             QList<QGraphicsItem *> items = this->scene()->items(QPointF(square->mapToParent(center).x() + 25, square->mapToParent(center).y() + 25));
 
@@ -245,7 +244,46 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             else{
                 delete chessPiece;
             }
+            if(getType() == Type::King){ // castling
+                if(getPos().first == 2){
+                    qDebug() << "castling left";
+                    QList<QGraphicsItem *> items = this->scene()->items(
+                        QPointF(25, getPos().second * 50 + 25));
 
+                    ChessPiece *rook = nullptr;
+
+                    for (QGraphicsItem *item : items) {
+                        rook = dynamic_cast<ChessPiece *>(item);
+                        if (rook) {
+                            break;
+                        }
+                    }
+                    if(rook){
+                        rook->setNewPos(3 * 50, getPos().second * 50);
+                        rook->addAMove();
+                        qDebug() << "castling is done";
+                    }
+                }
+                else if(getPos().first == 6){
+                    QList<QGraphicsItem *> items = this->scene()->items(
+                        QPointF(7 * 50 + 25, getPos().second * 50 + 25));
+
+                    ChessPiece *rook = nullptr;
+
+                    for (QGraphicsItem *item : items) {
+                        rook = dynamic_cast<ChessPiece *>(item);
+                        if (rook) {
+                            break;
+                        }
+                    }
+                    if(rook){
+                        rook->setNewPos(5 * 50, getPos().second * 50);
+                        rook->addAMove();
+                        qDebug() << "castling is done";
+                    }
+
+                }
+            }
             addAMove();
             getGameState()->changeTeamToMove();
 

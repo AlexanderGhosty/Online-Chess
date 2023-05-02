@@ -15,7 +15,7 @@
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
 public:
-    enum class Type{ Pawn, Knight, Bishop, Rook, Queen };
+    enum class Type{ Pawn, Knight, Bishop, Rook, Queen, King };
 
     ChessPiece();
 

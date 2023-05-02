@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     piecebishop.cpp \
+    pieceking.cpp \
     pieceknight.cpp \
     piecepawn.cpp \
     piecequeen.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     gamestate.h \
     mainwindow.h \
     piecebishop.h \
+    pieceking.h \
     pieceknight.h \
     piecepawn.h \
     piecequeen.h \
