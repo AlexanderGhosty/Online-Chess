@@ -12,16 +12,52 @@ void userHandler(User user, ServerData& serverData)
 	bool isCreate{0};
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
+	if (isCreate == true and serverData.is_room_exist(name))
+	{
+		std::cout << "Room exist";
+
+		// нужен enum с кодами возврата
+		// send (комната не создана ввести заново)
+		// ---------------------------------------
+		// Добавить действия в интерфейсе и тд !!!
+		// ---------------------------------------
+	}
+
 	// logs
 	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;
 
 	if (isCreate)
 	{
-		// create room, set name and password, transmitting user information
+		Room room(name, password);
+		int room_id = serverData.add_room(room);
+		serverData.get_room(room_id).add_connection(user.socket);
+
+		while (!serverData.get_room(room_id).isFull())
+		{
+			// Sleep for 5 seconds.
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+		}
 	}
 	else
 	{
-		// Search for a room with the specified parameters
+		// ИСПОЛЬЗУЕМ FIND_ROOM!
+		while (true)
+		{
+			if (serverData.connect_room(name, user.socket))
+			{
+				std::cout << "connected complited";
+				// send(комната существует, пользователь добавлен)
+				// ---------------------------------------
+				// Добавить действия в интерфейсе и тд !!!
+				// ---------------------------------------
+				break;
+			}
+			else
+			{
+				// send(комната не найдена ввести заново)
+			}
+		}
+		
 	}
 
 }
