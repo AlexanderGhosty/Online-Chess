@@ -13,6 +13,7 @@ public:
 	int get_users_online();
 	int get_max_users();
 	void add_user(User& user);
+	void remove_user();
 	void change_max_users(int max_users);
 	bool is_full();
 

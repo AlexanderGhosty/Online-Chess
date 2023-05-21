@@ -12,6 +12,7 @@ int ServerData::get_max_users()
 
 void ServerData::add_user(User& user)
 {
+	user.set_id(this->users.size());
 	this->users.emplace_back(user);
 	this->numberOfUsers += 1;
 }
