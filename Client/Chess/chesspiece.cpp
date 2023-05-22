@@ -14,6 +14,8 @@ ChessPiece::ChessPiece(Team team):
 
 }*/
 
+
+
 // bool canMoveTo(int posX, int posY);
 
 ChessPiece::ChessPiece(){
@@ -86,7 +88,6 @@ std::vector<ChessSquare*> ChessPiece::getMoveSquares()
 {
     return this->moveSquares;
 }
-
 
 int ChessPiece::getMovesAmount(){
     return this->movesAmount;
@@ -224,6 +225,7 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         qDebug() << "center " << center << center.x() << center.y();
         if (square->mapToParent(center) != m_startPos) {
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
+
             // killing enemy
             QList<QGraphicsItem *> items = this->scene()->items(QPointF(square->mapToParent(center).x() + 25, square->mapToParent(center).y() + 25));
 
@@ -286,6 +288,7 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             }
             addAMove();
             getGameState()->changeTeamToMove();
+
 
 
             qDebug() << "new position of an obj" << posX << posY;

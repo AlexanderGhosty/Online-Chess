@@ -13,7 +13,8 @@
 
 // Server
 #pragma comment(lib, "ws2_32.lib")
-#include <winsock.h>
+#include <WinSock2.h>
+#include <WS2tcpip.h>
 
 //Custom
 #include "User.h"
@@ -22,6 +23,7 @@
 
 //constexpr int MAX_PLAYERS = 16;
 
+
 int main()
 {
 	WSADATA wsaData;
@@ -29,7 +31,8 @@ int main()
     // Checking the DLL version
     if (WSAStartup(DLLVersion, &wsaData) != 0)
     {
-        std::cout << "The Winsock DLL not found" << std::endl;
+        std::cout << "Error Winsock version " << std::endl;
+        std::cout << WSAGetLastError() << std::endl;
         return 1;
     }
     else
@@ -40,14 +43,33 @@ int main()
    
     // Socket creation and TCP selection
     SOCKET serverListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (serverListen == INVALID_SOCKET)
+    {
+        std::cout << "Error socket initializtion  " << WSAGetLastError() << std::endl;
+        closesocket(serverListen);
+        WSACleanup();
+        return 1;
+    }
+    else 
+    {
+        std::cout << "serverListen socket init. is OK" << std::endl;
+    }
 
+    // IP translation to special numeric format
+    in_addr ip_to_num;
+    if (inet_pton(AF_INET, "127.0.0.1", &ip_to_num) <= 0) 
+    {
+        std::cout << "Error in IP translation to special numeric format" << std::endl;
+        return 1;
+    }
 
     // Socket address
     sockaddr_in serverAddr;
-    int sizeOfserverAddr = sizeof(serverAddr);
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    serverAddr.sin_port = htons(8080);
     serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr = ip_to_num;
+    serverAddr.sin_port = htons(8080);
+    int sizeOfserverAddr = sizeof(serverAddr);
+ 
 
     // Local address and socket association (address and port binding)
     if (bind(serverListen, (SOCKADDR*)&serverAddr, sizeOfserverAddr) == SOCKET_ERROR)
@@ -69,7 +91,7 @@ int main()
     }
     else
     {
-        std::cout << "listen() is OK, Waiting for connections" << std::endl;
+        std::cout << "listen() is OK, Waiting for connections..." << std::endl;
     }
     
     ServerData serverData;
@@ -78,7 +100,7 @@ int main()
     SOCKET newConnection;
     while (true)
     {
-        // Limiting the maximum number of users
+        // Checking for availability of slots
         if (serverData.is_full())
         {
             // Sleep for 5 seconds.
@@ -89,19 +111,21 @@ int main()
             // Accepting the connection
             newConnection = accept(serverListen, (SOCKADDR*)&serverAddr, &sizeOfserverAddr);
 
-            if (newConnection == 0)
+            if (newConnection == INVALID_SOCKET)
             {
-                std::cout << "Connection Error!" << std::endl;
+                std::cout << "Client tryied to connect, but an error occurred!" << std::endl;
             }
             else
             {
-                std::cout << "User connected!" << std::endl;
+                std::cout << "User connected successfully! " << newConnection << std::endl;
                 User user(newConnection);
                 std::async(std::launch::async, userHandler, user, std::ref(serverData));
             }
         }
     }
-
+    closesocket(serverListen);
+    closesocket(newConnection);
+    WSACleanup();
 
 	return 0;
 }

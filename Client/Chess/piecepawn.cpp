@@ -6,6 +6,7 @@ PiecePawn::PiecePawn(GameState::StateTeam team)
     setTeam(team);
     setType(Type::Pawn);
 
+
     if(getTeam() == GameState::StateTeam::White){
         QPixmap pix(":/images/images/white_pawn");
         this->setPixmap(pix.scaled(50, 50, Qt::KeepAspectRatio));
@@ -17,6 +18,7 @@ PiecePawn::PiecePawn(GameState::StateTeam team)
     this->setZValue(2.0);
 
     setZeroMovesAMount();
+
 }
 
 void PiecePawn::calculateMoves()
@@ -33,6 +35,7 @@ void PiecePawn::calculateMoves()
     }
     */
     qDebug() << "piece Pawn calculating";
+
     int maxMoveLength;
     int moveLength = 1;
     QList<QGraphicsItem *> items;
@@ -191,6 +194,36 @@ void PiecePawn::calculateMoves()
                     square->setZValue(1.0);
                     this->scene()->addItem(square);
                 }
+
+
+            QList<QGraphicsItem *> items = this->scene()->items(
+                QPointF(getPosPiece().first * 50 + 25,
+                        (getPosPiece().second + moveLength) * 50 + 25));
+
+            qDebug() << "x y move" << getPosPiece().first << getPosPiece().second << moveLength;
+            qDebug() << "mapToParent"
+                     << QPointF(getPosPiece().first * 50 + 25,
+                                (getPosPiece().second + moveLength) * 50 + 25);
+
+            ChessPiece *chessPiece = nullptr;
+
+            for (QGraphicsItem *item : items) {
+                chessPiece = dynamic_cast<ChessPiece *>(item);
+                if (chessPiece) {
+                    break;
+                }
+            }
+
+
+                ChessSquare *square = new ChessSquare(Qt::green,
+                                                      getPosPiece().first * 50,
+                                                      (getPosPiece().second + moveLength) * 50,
+                                                      50);
+                addMoveSquare(square);
+                qDebug() << "ЩА МОЖЕМ ХОДИТЬ";
+                square->setZValue(1.0);
+                this->scene()->addItem(square);
+
             }
         }
     }

@@ -12,6 +12,7 @@
 #include <vector>
 #include "gamestate.h"
 
+
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
 public:
@@ -52,6 +53,7 @@ public:
     void setGameState(GameState* gameState);
     GameState* getGameState();
 
+
 private:
     int posX; // cell position (not pixels)
     int posY;
@@ -60,10 +62,12 @@ private:
     bool selected;
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
+
     std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move to
     int movesAmount;
     int m_id;
     GameState* gameState;
+
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
