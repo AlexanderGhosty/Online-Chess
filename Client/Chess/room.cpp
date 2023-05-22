@@ -175,10 +175,10 @@ Room::Room(QWidget *parent) :
     m_objectCreated = true;
     qDebug() << "Constructor end";
 
-    view->board->addItem(piece);
+    // view->board->addItem(piece);
 
-    PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
-    piece1->setNewPos(0,150);
+    // PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
+    //piece1->setNewPos(0,150);
 
 }
 
