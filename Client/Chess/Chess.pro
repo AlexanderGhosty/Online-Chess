@@ -53,3 +53,5 @@ DISTFILES += \
 
 RESOURCES += \
     resource.qrc
+
+LIBS += -lws2_32

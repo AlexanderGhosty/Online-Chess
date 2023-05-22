@@ -9,6 +9,12 @@
 #include <chrono>
 #include <future>
 
+// SERVER include
+#pragma comment(lib, "ws2_32.lib")
+#include <WinSock2.h>
+#include <WS2tcpip.h>
+// END SERVER
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -21,13 +27,17 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setConnection(SOCKET connection);
+    SOCKET getConnection();
 
 private slots:
     void on_createRoomBtn_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     Room *roomWindow;
+    SOCKET connection;
 };
 
 #endif // MAINWINDOW_H
