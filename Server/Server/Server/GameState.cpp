@@ -72,3 +72,4 @@ void GameState::changeGameStatePosition(GameState::StateTeam team, int id, int x
     else {
         positions[1][id] = std::make_pair(x, y);
     }
+}

@@ -2,6 +2,7 @@
 #include "User.h"
 #include "ServerData.h"
 #include "Room.h"
+#include "GameState.h"
 #include <string>
 #include <iostream>
 

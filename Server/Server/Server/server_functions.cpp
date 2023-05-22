@@ -12,16 +12,19 @@ void userHandler(User user, ServerData& serverData)
 	bool isCreate{0};
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
-	if (isCreate == true and serverData.is_room_exist(name))
+	do 
 	{
 		std::cout << "Room exist";
 
-		// нужен enum с кодами возврата
-		// send (комната не создана ввести заново)
+		bool notComplited = false;
+		send(user.socket, (char*)notComplited, sizeof(notComplited), NULL);
+
+		recv(user.socket, name, sizeof(name), NULL);
+
 		// ---------------------------------------
 		// Добавить действия в интерфейсе и тд !!!
 		// ---------------------------------------
-	}
+	} while (isCreate == true and serverData.is_room_exist(name));
 
 	// logs
 	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;
@@ -32,29 +35,46 @@ void userHandler(User user, ServerData& serverData)
 		int room_id = serverData.add_room(room);
 		serverData.get_room(room_id).add_connection(user.socket);
 
+		bool complited = true;
+		send(user.socket, (char*)complited, sizeof(complited), NULL);
+
 		while (!serverData.get_room(room_id).isFull())
 		{
 			// Sleep for 5 seconds.
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 
+		GameState gameState;
+
 		// игра стартует
-		enum message_type{ step , flag};
-		recv(user.socket, );
-		send(serverData.get_room(room_id).opponent, );
-		recv(serverData.get_room(room_id).opponent, );
-		send(user.socket, );
+		
+		while (true)
+		{
+			recv(user.socket, (char*)&gameState, sizeof(gameState), NULL);
+			if (!gameState.get_isWin())
+			{
+				break;
+			}
+			send(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
+			recv(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
+			if (!gameState.get_isWin())
+			{
+				break;
+			}
+			send(user.socket, (char*)&gameState, sizeof(gameState), NULL);
+		}
+		
 
 	}
 	else
 	{
-		// ИСПОЛЬЗУЕМ FIND_ROOM!
 		while (true)
 		{
 			if (serverData.connect_room(name, user.socket))
 			{
 				std::cout << "connected complited";
-				// send(комната существует, пользователь добавлен)
+				bool complited = true;
+				send(user.socket, (char*)complited, sizeof(complited), NULL);
 				// ---------------------------------------
 				// Добавить действия в интерфейсе и тд !!!
 				// ---------------------------------------
@@ -62,6 +82,8 @@ void userHandler(User user, ServerData& serverData)
 			}
 			else
 			{
+				bool notComplited = false;
+				send(user.socket, (char*)notComplited, sizeof(notComplited), NULL);
 				// send(комната не найдена ввести заново)
 			}
 		}
