@@ -5,6 +5,7 @@
 #include <atomic>
 #include <mutex>
 #include <iostream>
+#include <unordered_map>
 
 class ServerData
 {

@@ -37,6 +37,14 @@ void userHandler(User user, ServerData& serverData)
 			// Sleep for 5 seconds.
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
+
+		// игра стартует
+		enum message_type{ step , flag};
+		recv(user.socket, );
+		send(serverData.get_room(room_id).opponent, );
+		recv(serverData.get_room(room_id).opponent, );
+		send(user.socket, );
+
 	}
 	else
 	{

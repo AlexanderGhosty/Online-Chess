@@ -75,7 +75,7 @@ bool ServerData::connect_room(std::string name, int connection)
 	{
 		if (name == room.name)
 		{
-			room.add_connection(connection);
+			room.opponent = connection;
 			return true;
 		}
 	}
