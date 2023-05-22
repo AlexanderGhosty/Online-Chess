@@ -10,62 +10,63 @@
 #include "chesssquare.h"
 #include <QDebug>
 #include <vector>
-#include "room.h"
+#include "gamestate.h"
 
 
 class ChessPiece : public QGraphicsPixmapItem, public QObject
 {
 public:
-    enum class Type{ Pawn };
+    enum class Type{ Pawn, Knight, Bishop, Rook, Queen, King };
 
-    enum class Team { White, Black };
-
-    // ChessPiece(Team team);
     ChessPiece();
 
     void setType(Type type);
-    void setTeam(Team team);
+    void setTeam(GameState::StateTeam team);
     void setNewPos(int posX, int posY);
     std::pair<int, int> getPosPiece();
     void setSelectMode(bool selectMode);
     bool isSelected() const;
 
     Type getType() const;
-    Team getTeam() const;
+    GameState::StateTeam getTeam() const;
     std::pair<int, int> getPos();
 
 
 
     virtual void calculateMoves() = 0;
 
+    // places where a chesspiece can move
     void addMoveSquare(ChessSquare* moveSquare);
     std::vector <ChessSquare*> getMoveSquares();
-<<<<<<< Updated upstream
 
-    int getMovesMade();
-    void addMoveAmount();
-    void setZeroMoves();
-=======
+    // moves
+    int getMovesAmount();
+    void setZeroMovesAMount();
     void addAMove();
-    int getMoveAmount();
-    void setZeroMoveAmount();
+    bool tryMove(int x, int y); // top left corner of a chess square
 
->>>>>>> Stashed changes
+    // id features
+    int getID();
+    void setId(int m_id);
+
+    // game state
+    void setGameState(GameState* gameState);
+    GameState* getGameState();
+
 
 private:
-    int posX;
+    int posX; // cell position (not pixels)
     int posY;
     Type type;
-    Team team;
+    GameState::StateTeam team;
     bool selected;
     QPointF m_startPos; // for drag and drop
     bool m_isDragging = false;
-    std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move
-<<<<<<< Updated upstream
-    int movesMade;
-=======
-    int moveAmount;
->>>>>>> Stashed changes
+
+    std::vector <ChessSquare*> moveSquares; // x and y of a place where player could move to
+    int movesAmount;
+    int m_id;
+    GameState* gameState;
 
 
 protected:

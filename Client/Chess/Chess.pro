@@ -13,9 +13,15 @@ SOURCES += \
     chesspiece.cpp \
     chesssquare.cpp \
     chessview.cpp \
+    gamestate.cpp \
     main.cpp \
     mainwindow.cpp \
+    piecebishop.cpp \
+    pieceking.cpp \
+    pieceknight.cpp \
     piecepawn.cpp \
+    piecequeen.cpp \
+    piecerook.cpp \
     room.cpp
 
 HEADERS += \
@@ -23,8 +29,14 @@ HEADERS += \
     chesspiece.h \
     chesssquare.h \
     chessview.h \
+    gamestate.h \
     mainwindow.h \
+    piecebishop.h \
+    pieceking.h \
+    pieceknight.h \
     piecepawn.h \
+    piecequeen.h \
+    piecerook.h \
     room.h
 
 FORMS += \

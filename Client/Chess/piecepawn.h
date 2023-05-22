@@ -8,7 +8,7 @@
 class PiecePawn: public ChessPiece
 {
 public:
-    PiecePawn(Team team);
+    PiecePawn(GameState::StateTeam team);
     void calculateMoves() override;
 };
 

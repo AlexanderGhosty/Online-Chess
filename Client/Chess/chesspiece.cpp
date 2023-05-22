@@ -27,13 +27,21 @@ void ChessPiece::setType(Type type)
     this->type = type;
 }
 
-void ChessPiece::setTeam(Team team)
+void ChessPiece::setTeam(GameState::StateTeam team)
 {
     this->team = team;
 }
 
 void ChessPiece::setNewPos(int posX, int posY)
 {
+    getGameState()->changeGameStatePosition(getTeam(), getID(), posX, posY);
+    qDebug() << "setNewPos: gamestate position changed";
+    if(posX < 0 || posY < 0){
+        qDebug() << "killed piece" << getID();
+        this->setVisible(false);
+        this->setEnabled(false);
+        return;
+    }
     this->posX = posX / 50;
     this->posY = posY / 50;
     setPos(posX, posY);
@@ -59,7 +67,7 @@ std::pair<int, int> ChessPiece::getPosPiece()
     return std::make_pair(this->posX, this->posY);
 }
 
-ChessPiece::Team ChessPiece::getTeam() const
+GameState::StateTeam ChessPiece::getTeam() const
 {
     return this->team;
 }
@@ -81,40 +89,75 @@ std::vector<ChessSquare*> ChessPiece::getMoveSquares()
     return this->moveSquares;
 }
 
-<<<<<<< Updated upstream
-
-int ChessPiece::getMovesMade()
-{
-    return this->movesMade;
+int ChessPiece::getMovesAmount(){
+    return this->movesAmount;
 }
 
-void ChessPiece::addMoveAmount()
-{
-    ++this->movesMade;
+void ChessPiece::setZeroMovesAMount(){
+    this->movesAmount = 0;
 }
 
-void ChessPiece::setZeroMoves()
-{
-    this->movesMade = 0;
-}
-
-
-
-=======
 void ChessPiece::addAMove(){
-    ++this->moveAmount;
+    ++this->movesAmount;
 }
 
-int ChessPiece::getMoveAmount(){
-    return this->moveAmount;
+int ChessPiece::getID(){
+    return m_id;
 }
 
-void ChessPiece::setZeroMoveAmount(){
-    this->moveAmount = 0;
+void ChessPiece::setGameState(GameState* gameState){
+    this->gameState = gameState;
 }
 
->>>>>>> Stashed changes
+GameState* ChessPiece::getGameState(){
+    return gameState;
+}
+
+void ChessPiece::setId(int m_id){
+    this->m_id = m_id;
+}
+
+bool ChessPiece::tryMove(int x, int y){
+    if(x >= 0 && y >= 0 && x <= 7 * 50 && y <= 7 * 50){
+        QList<QGraphicsItem *> items = this->scene()->items(
+            QPointF(x + 25, y + 25));
+
+        ChessPiece *chessPiece = nullptr;
+
+        for (QGraphicsItem *item : items) {
+            chessPiece = dynamic_cast<ChessPiece *>(item);
+            if (chessPiece) {
+                break;
+            }
+        }
+
+        if((chessPiece && chessPiece->getTeam() != this->getTeam()) || !chessPiece){
+            ChessSquare *square = new ChessSquare(Qt::green,
+                                                  x, y,
+                                                  50);
+            addMoveSquare(square);
+            square->setZValue(1.0);
+            this->scene()->addItem(square);
+            if(!chessPiece){
+                return true;
+            }
+            return false;
+        }
+        else{
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+}
+
+
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    if(getTeam() != getGameState()->getTeamToMove())
+        return;
+    qDebug() << "mousePressEvent";
+    getGameState()->getTeamToMove();
     m_startPos = pos();
     m_isDragging = true;
     // QGraphicsItem::mousePressEvent(event);
@@ -123,10 +166,11 @@ void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
     calculateMoves();
 }
 
+
 void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_isDragging) {
         // setPos(mapToParent(event->pos()).x() -25, mapToParent(event->pos()).y() -25);
-
+        // qDebug() << "mouseMoveEvent";
         QPointF newPos = event->scenePos();
 
         // ?????????? ??????? ????? ? ??????? ???????
@@ -159,6 +203,8 @@ void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    if(!m_isDragging)
+        return;
     m_isDragging = false;
     // Get a list of colliding items
     QList<QGraphicsItem*> items = scene()->items(mapToScene(event->pos()));
@@ -176,15 +222,75 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     if (square && square->getBrush() == Qt::green) { // If the chess piece is over a valid square
         // Snap the chess piece to the center of the square
         QPointF center = square->rect().topLeft();
-        qDebug() << "center " << center << (int) center.x();
+        qDebug() << "center " << center << center.x() << center.y();
         if (square->mapToParent(center) != m_startPos) {
             setNewPos((int) (square->mapToParent(center)).x(), (int) (square->mapToParent(center)).y());
-<<<<<<< Updated upstream
-            addMoveAmount();
 
-=======
+            // killing enemy
+            QList<QGraphicsItem *> items = this->scene()->items(QPointF(square->mapToParent(center).x() + 25, square->mapToParent(center).y() + 25));
+
+            ChessPiece *chessPiece = nullptr;
+
+            for (QGraphicsItem *item : items) {
+                chessPiece = dynamic_cast<ChessPiece *>(item);
+                if (chessPiece && chessPiece->getTeam() != getGameState()->getTeamToMove()) {
+                    qDebug() << "нашел";
+                    break;
+                }
+            }
+
+            if(chessPiece!= nullptr){ // if can kill a piece
+                //chessPiece->setActive(false); // might be in SetNewPos method (-1 pos check)
+                chessPiece->setNewPos(-1, 0);
+            }
+            else{
+                delete chessPiece;
+            }
+            if(getType() == Type::King){ // castling
+                if(getPos().first == 2){
+                    qDebug() << "castling left";
+                    QList<QGraphicsItem *> items = this->scene()->items(
+                        QPointF(25, getPos().second * 50 + 25));
+
+                    ChessPiece *rook = nullptr;
+
+                    for (QGraphicsItem *item : items) {
+                        rook = dynamic_cast<ChessPiece *>(item);
+                        if (rook) {
+                            break;
+                        }
+                    }
+                    if(rook){
+                        rook->setNewPos(3 * 50, getPos().second * 50);
+                        rook->addAMove();
+                        qDebug() << "castling is done";
+                    }
+                }
+                else if(getPos().first == 6){
+                    QList<QGraphicsItem *> items = this->scene()->items(
+                        QPointF(7 * 50 + 25, getPos().second * 50 + 25));
+
+                    ChessPiece *rook = nullptr;
+
+                    for (QGraphicsItem *item : items) {
+                        rook = dynamic_cast<ChessPiece *>(item);
+                        if (rook) {
+                            break;
+                        }
+                    }
+                    if(rook){
+                        rook->setNewPos(5 * 50, getPos().second * 50);
+                        rook->addAMove();
+                        qDebug() << "castling is done";
+                    }
+
+                }
+            }
             addAMove();
->>>>>>> Stashed changes
+            getGameState()->changeTeamToMove();
+
+
+
             qDebug() << "new position of an obj" << posX << posY;
             qDebug()
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"
@@ -200,12 +306,9 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         setPos(m_startPos);
     }
     setSelectMode(false);
-    for (auto it = this->moveSquares.begin(); it != this->moveSquares.end();) {
-        delete *it;
-        it = this->moveSquares.erase(it);
-        if (it != this->moveSquares.end()) {
-            ++it; // переходим к следующему элементу, если он существует
-        }
+
+    for (auto i = 0; i < moveSquares.size(); ++i){
+        delete moveSquares[i];
     }
     this->moveSquares.clear();
 }

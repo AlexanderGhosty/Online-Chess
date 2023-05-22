@@ -1,10 +1,16 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/white_pawn.png</file>
-<<<<<<< Updated upstream
-        <file>images/pawn_black.png</file>
-=======
         <file>images/black_pawn.png</file>
->>>>>>> Stashed changes
+        <file>images/black_knight.png</file>
+        <file>images/white_knight.png</file>
+        <file>images/black_bishop.png</file>
+        <file>images/white_bishop.png</file>
+        <file>images/black_rook.png</file>
+        <file>images/white_rook.png</file>
+        <file>images/black_queen.png</file>
+        <file>images/white_queen.png</file>
+        <file>images/black_king.png</file>
+        <file>images/white_king.png</file>
     </qresource>
 </RCC>

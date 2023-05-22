@@ -3,8 +3,14 @@
 
 #include "chessview.h"
 #include <QWidget>
-#include "chesspiece.h"
+
+// #include "chesspiece.h"
 #include "piecepawn.h"
+#include "pieceknight.h"
+#include "piecebishop.h"
+#include "piecerook.h"
+#include "piecequeen.h"
+#include "pieceking.h"
 
 namespace Ui {
 class Room;
@@ -19,11 +25,13 @@ public:
     ~Room();
     ChessView *view;
     QScrollArea *scrollArea;
+    bool isObjectCreated() const;
 
 
 private:
     ChessPiece::Type teamToMove;
     Ui::Room *ui;
+    bool m_objectCreated;
 };
 
 #endif // ROOM_H
