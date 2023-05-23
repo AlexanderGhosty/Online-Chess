@@ -21,12 +21,19 @@ void MainWindow::on_createRoomBtn_clicked()
 {
     QByteArray byteArray = this->ui->titleLineEdit->text().toUtf8();
     send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
+    byteArray = this->ui->passwordLineEdit->text().toUtf8();
+    send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
+    bool isCreate = true;
+    send(connection, (char*)isCreate,sizeof(isCreate), NULL);
     bool isValid = false;
+
     recv(connection, (char*)isValid,sizeof(isValid), NULL);
-    if(!isValid){
-        this->ui->resultLabel->setText("ТАКАЯ КОМНАТА СУЩЕСТВУЕТ");
+
+    if(isValid){
+        this->ui->resultLabel->setText("ТАК КОМНАТА СУЩЕСТВУЕТ");
         return;
     }
+
     roomWindow = new Room(nullptr);
 
     // QProgressDialog progressDialog("Loading data...", QString(), 0, 0, qobject_cast<QWidget*>(parent()), Qt::CustomizeWindowHint);

@@ -12,7 +12,8 @@ void userHandler(User user, ServerData& serverData)
 	bool isCreate{0};
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
-	do 
+
+	while (isCreate == true and serverData.is_room_exist(name))
 	{
 		std::cout << "Room exist";
 
@@ -20,11 +21,13 @@ void userHandler(User user, ServerData& serverData)
 		send(user.socket, (char*)notComplited, sizeof(notComplited), NULL);
 
 		recv(user.socket, name, sizeof(name), NULL);
+		recv(user.socket, password, sizeof(name), NULL);
+		recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
 		// ---------------------------------------
 		// Добавить действия в интерфейсе и тд !!!
 		// ---------------------------------------
-	} while (isCreate == true and serverData.is_room_exist(name));
+	} 
 
 	// logs
 	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     // IP translation to special numeric format
     in_addr ip_to_num;
-    if (inet_pton(AF_INET, "26.154.166.60", &ip_to_num) <= 0)
+    if (inet_pton(AF_INET, "127.0.0.1", &ip_to_num) <= 0)
     {
         // std::cout << "Error in IP translation to special numeric format" << std::endl;
         return 1;
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     SOCKADDR_IN addr;
     int sizeOfaddr = sizeof(addr);
     addr.sin_addr = ip_to_num;
-    addr.sin_port = htons(4899);
+    addr.sin_port = htons(8080);
     addr.sin_family = AF_INET;
 
     // создание сокета для подключения

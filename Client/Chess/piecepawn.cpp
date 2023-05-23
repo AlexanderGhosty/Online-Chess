@@ -34,7 +34,7 @@ void PiecePawn::calculateMoves()
         moveLength = 1;
     }
     */
-    qDebug() << "piece Pawn calculating";
+    qDebug() << "piece Pawn calculating" << getMovesAmount();
 
     int maxMoveLength;
     int moveLength = 1;
@@ -51,6 +51,7 @@ void PiecePawn::calculateMoves()
     if (getTeam() == GameState::StateTeam::White) {
         if(getPosPiece().second >= 1){
             for(moveLength; moveLength <= maxMoveLength; ++moveLength){
+                qDebug() << "MOVE LENGTH" << moveLength;
                 QList<QGraphicsItem *> items = this->scene()->items(
                     QPointF(getPosPiece().first * 50 + 25,
                             (getPosPiece().second - moveLength) * 50 + 25));
@@ -122,6 +123,7 @@ void PiecePawn::calculateMoves()
     } else { // BLACK
         if (getPosPiece().second <= 6) {
             for(moveLength; moveLength <= maxMoveLength; ++moveLength){
+                qDebug() << "MOVE LENGTH" << moveLength;
                 items = this->scene()->items(
                     QPointF(getPosPiece().first * 50 + 25,
                             (getPosPiece().second + moveLength) * 50 + 25));
@@ -185,6 +187,7 @@ void PiecePawn::calculateMoves()
                         break;
                     }
                 }
+
                 if(chessPiece && chessPiece->getTeam() != this->getTeam()){
                     ChessSquare *square = new ChessSquare(Qt::green,
                                                           getPosPiece().first * 50 + 50,
@@ -195,7 +198,7 @@ void PiecePawn::calculateMoves()
                     this->scene()->addItem(square);
                 }
 
-
+            /*
             QList<QGraphicsItem *> items = this->scene()->items(
                 QPointF(getPosPiece().first * 50 + 25,
                         (getPosPiece().second + moveLength) * 50 + 25));
@@ -223,7 +226,7 @@ void PiecePawn::calculateMoves()
                 qDebug() << "ЩА МОЖЕМ ХОДИТЬ";
                 square->setZValue(1.0);
                 this->scene()->addItem(square);
-
+            */
             }
         }
     }
