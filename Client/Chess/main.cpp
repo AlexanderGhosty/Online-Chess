@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
     // подключение к серверу (ждет 75 сек. ответа от сервера)
     do
     {
-        qDebug() << "Error: failed connect to server.\n";
+        QThread::sleep(1);
+        // qDebug() << "Error: failed connect to server.\n";
     } while(connect(Connection, (SOCKADDR*)&addr, sizeOfaddr) != 0);
     // std::cout << "Connection established\n";
 

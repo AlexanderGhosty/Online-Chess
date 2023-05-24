@@ -95,6 +95,7 @@ int main()
     }
     
     ServerData serverData;
+    serverData.change_max_users(4);
 
     // Connection process
     SOCKET newConnection;
@@ -104,6 +105,8 @@ int main()
         if (serverData.is_full())
         {
             // Sleep for 5 seconds.
+            newConnection = accept(serverListen, (SOCKADDR*)&serverAddr, &sizeOfserverAddr);
+            closesocket(newConnection);
             std::this_thread::sleep_for(std::chrono::seconds(5));
         }
         else
@@ -119,7 +122,10 @@ int main()
             {
                 std::cout << "User connected successfully! " << newConnection << std::endl;
                 User user(newConnection);
-                std::async(std::launch::async, userHandler, user, std::ref(serverData));
+                std::thread thread(userHandler, user, std::ref(serverData));
+                // std::async(std::launch::async, userHandler, user, std::ref(serverData));
+                serverData.add_number_of_users();
+                thread.detach();
             }
         }
     }

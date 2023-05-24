@@ -17,7 +17,7 @@ void ServerData::add_user(User& user)
 	users_mutex.lock();
 	user.set_id(this->users.size());
 	this->users.emplace_back(user);
-	this->numberOfUsers += 1;
+	// this->numberOfUsers += 1;
 	users_mutex.unlock();
 }
 
@@ -76,6 +76,7 @@ bool ServerData::connect_room(std::string name, int connection)
 		if (name == room.name)
 		{
 			room.opponent = connection;
+			// this->numberOfUsers += 1;
 			return true;
 		}
 	}
@@ -102,4 +103,8 @@ ServerData::ServerData()
 {
 	this->numberOfUsers = 0;
 	this->max_users = 16;
+}
+
+void ServerData::add_number_of_users() {
+	++this->numberOfUsers;
 }

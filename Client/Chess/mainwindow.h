@@ -13,6 +13,8 @@
 #pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+
+#include <QThread>
 // END SERVER
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +35,8 @@ public:
 private slots:
     void on_createRoomBtn_clicked();
 
+
+    void on_joinRoomBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

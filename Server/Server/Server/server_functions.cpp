@@ -9,11 +9,12 @@ void userHandler(User user, ServerData& serverData)
 	recv(user.socket, name, sizeof(name), NULL);
 	char password[255];
 	recv(user.socket, password, sizeof(name), NULL);
-	bool isCreate{0};
+	// bool isCreate{0};
+	char isCreate[1];
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
 
-	while (isCreate == true and serverData.is_room_exist(name))
+	while (isCreate[0] == '1' and serverData.is_room_exist(name))
 	{
 		std::cout << "Room exist";
 
@@ -32,7 +33,7 @@ void userHandler(User user, ServerData& serverData)
 	// logs
 	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;
 
-	if (isCreate)
+	if (isCreate[0] == '1')
 	{
 		Room room(name, password);
 		int room_id = serverData.add_room(room);

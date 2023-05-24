@@ -15,6 +15,9 @@ private:
 	std::vector <Room> rooms;
 	int max_users;
 public:
+
+	void add_number_of_users();
+
 	int get_users_online();
 	int get_max_users();
 

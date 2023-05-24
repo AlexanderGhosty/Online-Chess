@@ -23,7 +23,7 @@ void MainWindow::on_createRoomBtn_clicked()
     send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
     byteArray = this->ui->passwordLineEdit->text().toUtf8();
     send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
-    bool isCreate = true;
+    char isCreate[1] = {'1'};
     send(connection, (char*)isCreate,sizeof(isCreate), NULL);
     bool isValid = false;
 
@@ -56,6 +56,32 @@ void MainWindow::on_createRoomBtn_clicked()
     this->close();
 }
 
+void MainWindow::on_joinRoomBtn_clicked()
+{
+    QByteArray byteArray = this->ui->titleLineEdit->text().toUtf8();
+    send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
+    byteArray = this->ui->passwordLineEdit->text().toUtf8();
+    send(connection, byteArray.constData(),sizeof(byteArray.constData()), NULL);
+    // bool isCreate = false;
+    char isCreate[1] = {'0'};
+    send(connection, (char*)isCreate,sizeof(isCreate), NULL);
+    bool isValid = false;
+
+    recv(connection, (char*)isValid,sizeof(isValid), NULL);
+
+    if(isValid){
+        this->ui->resultLabel->setText("ТАК КОМНАТА НЕ СУЩЕСТВУЕТ");
+        return;
+    }
+
+    roomWindow = new Room(nullptr);
+
+    qDebug() << "Room has been loaded";
+    roomWindow->show();
+
+    this->close();
+}
+
 void MainWindow::setConnection(SOCKET connection){
     this->connection = connection;
 }
@@ -63,4 +89,7 @@ void MainWindow::setConnection(SOCKET connection){
 SOCKET MainWindow::getConnection(){
     return this->connection;
 }
+
+
+
 
