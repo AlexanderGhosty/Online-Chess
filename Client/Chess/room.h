@@ -35,6 +35,8 @@ private:
     Ui::Room *ui;
     bool m_objectCreated;
 
+    GameState* state;
+
 private slots:
     void startReceiving();
 };

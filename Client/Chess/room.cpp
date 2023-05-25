@@ -17,7 +17,8 @@ Room::Room(QWidget *parent) :
     view->setMaximumSize(450,450);
 
 
-    GameState* state = new GameState(nullptr);
+    state = new GameState(nullptr);
+
     qDebug() << "GameState created";
     boardPieces.resize(2, std::vector<ChessPiece*>(0));
 
@@ -133,6 +134,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         pawn->setNewPos(i * 50, 50);
         view->board->addItem(pawn);
+        boardPieces[1].push_back(pawn);
     }
 
     // ---- creating knight ----
@@ -144,6 +146,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         knight->setNewPos(50 + i * 50 * 5, 0);
         view->board->addItem(knight);
+        boardPieces[1].push_back(knight);
     }
 
     // ---- creating bishop ----
@@ -155,6 +158,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         bishop->setNewPos(50 * 2 + i * 50 * 3, 0);
         view->board->addItem(bishop);
+        boardPieces[1].push_back(bishop);
     }
 
     // ---- creating rook ----
@@ -166,6 +170,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         rook->setNewPos(i * 50 * 7, 0);
         view->board->addItem(rook);
+        boardPieces[1].push_back(rook);
     }
 
     // ---- creating queen ----
@@ -177,6 +182,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         queen->setNewPos(50 * 3, 0);
         view->board->addItem(queen);
+        boardPieces[1].push_back(queen);
     }
 
     // ---- creating king ----
@@ -188,6 +194,7 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         king->setNewPos(50 * 4, 0);
         view->board->addItem(king);
+        boardPieces[1].push_back(king);
         break;
     }
     qDebug() << "Black team created";
@@ -200,7 +207,6 @@ Room::Room(QWidget *parent) :
 
     // PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
     //piece1->setNewPos(0,150);
-
 }
 
 Room::~Room()
@@ -217,4 +223,15 @@ void Room::startReceiving(){
     // ---------------------------------
     // ---- ADD RECEIVING & analyze ----
     // ---------------------------------
+    std::vector<std::vector<std::pair<int, int>>> receivingPositions(2, std::vector<std::pair<int,int>>(16));
+    int teamNum;
+    if(state->getYourTeam() == GameState::StateTeam::White){
+        teamNum = 1;
+    }
+    else{
+        teamNum = 0;
+    }
+    for (int id = 0; id < 16; ++id) {
+        boardPieces[teamNum][id]->setNewPos(receivingPositions[teamNum][id].first, receivingPositions[teamNum][id].second);
+    }
 }
