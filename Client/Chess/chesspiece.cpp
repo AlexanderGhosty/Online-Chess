@@ -154,7 +154,7 @@ bool ChessPiece::tryMove(int x, int y){
 
 
 void ChessPiece::mousePressEvent(QGraphicsSceneMouseEvent* event){
-    if(getTeam() != getGameState()->getTeamToMove())
+    if(getTeam() != getGameState()->getTeamToMove() || gameState->getYourTeam() != getGameState()->getTeamToMove())
         return;
     qDebug() << "mousePressEvent";
     getGameState()->getTeamToMove();
@@ -203,6 +203,8 @@ void ChessPiece::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 
 void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    bool madeAMove = false;
+
     if(!m_isDragging)
         return;
     m_isDragging = false;
@@ -298,13 +300,7 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
                 << (int) (square->mapToParent(center)).y();
 
 
-
-            // ------------------------------------
-            // ---------- SEND TO SERVER ----------
-            // ------------------------------------
-
-            emit getGameState()->startReceivingSig();
-
+            madeAMove = true;
         }
         else{
             setPos(m_startPos);
@@ -320,4 +316,20 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         delete moveSquares[i];
     }
     this->moveSquares.clear();
+    if(madeAMove){
+        // ------------------------------------
+        // ---------- SEND TO SERVER ----------
+        // ------------------------------------
+        // /*
+        std::vector<std::vector<std::pair<int, int>>> sendingPositions = gameState->getGameStatePositions();
+
+        if (send(gameState->connection, (char*)&sendingPositions, sizeof(sendingPositions), NULL) == -1)
+        {
+            closesocket(gameState->connection);
+            qDebug() << "socket closed";
+        }
+
+        emit getGameState()->startReceivingSig();
+        // */
+    }
 }

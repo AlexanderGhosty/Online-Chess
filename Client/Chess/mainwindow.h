@@ -8,6 +8,7 @@
 #include <thread>
 #include <chrono>
 #include <future>
+#include <QThread>>
 
 // SERVER include
 #pragma comment(lib, "ws2_32.lib")

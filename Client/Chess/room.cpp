@@ -224,6 +224,13 @@ void Room::startReceiving(){
     // ---- ADD RECEIVING & analyze ----
     // ---------------------------------
     std::vector<std::vector<std::pair<int, int>>> receivingPositions(2, std::vector<std::pair<int,int>>(16));
+
+    while (recv(state->connection, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
+    {
+        QThread::msleep(1);
+    }
+    qDebug() << "1";
+    qDebug() << "received data" << receivingPositions[0][0].first;
     int teamNum;
     if(state->getYourTeam() == GameState::StateTeam::White){
         teamNum = 1;
@@ -234,4 +241,5 @@ void Room::startReceiving(){
     for (int id = 0; id < 16; ++id) {
         boardPieces[teamNum][id]->setNewPos(receivingPositions[teamNum][id].first, receivingPositions[teamNum][id].second);
     }
+    state->changeTeamToMove();
 }

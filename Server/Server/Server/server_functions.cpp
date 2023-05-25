@@ -32,7 +32,7 @@ void userHandler(User user, ServerData& serverData)
 	}
 
 	// logs
-	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;
+	std::cout << name << ' ' << password << ' ' << isCreate[0] << std::endl;
 
 	if (isCreate[0] == '1')
 	{
@@ -61,18 +61,21 @@ void userHandler(User user, ServerData& serverData)
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
+			std::cout << "recieved data from admin" << std::endl;
 			if (send(serverData.get_room(room_id).opponent, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
+			std::cout << "sended data to opponent" << std::endl;
 			if (recv(serverData.get_room(room_id).opponent, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
+			std::cout << "recieved data from opponent" << std::endl;
 
 			if (send(user.socket, (char*)&receivingPositions, sizeof(receivingPositions), NULL))
 			{
@@ -80,6 +83,7 @@ void userHandler(User user, ServerData& serverData)
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
+			std::cout << "send data to admin" << std::endl;
 		}
 		
 

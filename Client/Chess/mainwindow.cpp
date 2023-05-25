@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -35,6 +36,8 @@ void MainWindow::on_createRoomBtn_clicked()
     }
 
     roomWindow = new Room(nullptr);
+    roomWindow->state->connection = connection;
+    roomWindow->state->setYourTeam(GameState::StateTeam::White);
 
     // QProgressDialog progressDialog("Loading data...", QString(), 0, 0, qobject_cast<QWidget*>(parent()), Qt::CustomizeWindowHint);
     // progressDialog.setWindowModality(Qt::WindowModal); // Делаем окно модальным
@@ -75,11 +78,14 @@ void MainWindow::on_joinRoomBtn_clicked()
     }
 
     roomWindow = new Room(nullptr);
+    roomWindow->state->connection = connection;
+    roomWindow->state->setYourTeam(GameState::StateTeam::Black);
 
     qDebug() << "Room has been loaded";
     roomWindow->show();
-
     this->close();
+    QThread::sleep(1);
+    roomWindow->startReceiving();
 }
 
 void MainWindow::setConnection(SOCKET connection){

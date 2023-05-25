@@ -6,6 +6,12 @@
 #include <QObject>
 #include <QDebug>
 
+// server include
+#pragma comment(lib, "ws2_32.lib")
+#include <WinSock2.h>
+#include <WS2tcpip.h>
+
+
 class GameState: public QObject
 {
     Q_OBJECT
@@ -35,6 +41,9 @@ public:
     // positions
     std::vector<std::vector<std::pair<int, int>>> getGameStatePositions();
     void changeGameStatePosition(StateTeam team, int id,int x, int y);
+
+    // server
+    SOCKET connection;
 
 private:
     std::vector<std::vector<std::pair<int, int>>> positions;

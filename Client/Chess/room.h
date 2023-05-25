@@ -11,6 +11,7 @@
 #include "piecerook.h"
 #include "piecequeen.h"
 #include "pieceking.h"
+#include <QThread>
 
 namespace Ui {
 class Room;
@@ -26,8 +27,8 @@ public:
     ChessView *view;
     QScrollArea *scrollArea;
     bool isObjectCreated() const;
-
     std::vector<std::vector<ChessPiece*>> boardPieces;
+    GameState* state;
 
 
 private:
@@ -35,9 +36,8 @@ private:
     Ui::Room *ui;
     bool m_objectCreated;
 
-    GameState* state;
 
-private slots:
+public slots:
     void startReceiving();
 };
 

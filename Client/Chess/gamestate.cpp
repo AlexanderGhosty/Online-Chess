@@ -12,7 +12,7 @@
 
 GameState::GameState(QObject *parent)
 {
-    yourTeam = StateTeam::White; // потом исправить. Сейчас для тестов
+    // yourTeam = StateTeam::White; // потом исправить. Сейчас для тестов
     teamToMove = StateTeam::White;
     pieceIdCounter = 0;
     positions.resize(2, std::vector<std::pair<int, int>>(16));
