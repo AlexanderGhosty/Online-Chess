@@ -75,6 +75,6 @@ void GameState::changeGameStatePosition(GameState::StateTeam team, int id, int x
 
 // ------------------- server ---------------------
 
-void GameState::startReceivingSig(){
-    qDebug() << "receive signal";
-}
+//void GameState::startReceivingSig(){
+//    qDebug() << "receive signal";
+// }
