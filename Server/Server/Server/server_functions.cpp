@@ -28,7 +28,7 @@ void userHandler(User user, ServerData& serverData)
 		// ---------------------------------------
 		// Добавить действия в интерфейсе и тд !!!
 		// ---------------------------------------
-	} 
+	}
 
 	// logs
 	std::cout << name << ' ' << password << ' ' << isCreate << std::endl;
@@ -51,25 +51,45 @@ void userHandler(User user, ServerData& serverData)
 		GameState gameState;
 
 		// игра стартует
-		
+
 		while (true)
 		{
-			recv(user.socket, (char*)&gameState, sizeof(gameState), NULL);
+			if (recv(user.socket, (char*)&gameState, sizeof(gameState), NULL) == -1)
+			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
+				break;
+			}
 			if (!gameState.get_isWin())
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
-			send(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
-			recv(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
+			if (send(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL) == -1)
+			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
+				break;
+			}
+			if (recv(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL) == -1)
+			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
+				break;
+			}
 			if (!gameState.get_isWin())
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
-			send(user.socket, (char*)&gameState, sizeof(gameState), NULL);
+			if (send(user.socket, (char*)&gameState, sizeof(gameState), NULL))
+			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
+				break;
+			}
 		}
 		
 
