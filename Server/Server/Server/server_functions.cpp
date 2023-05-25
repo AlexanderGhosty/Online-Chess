@@ -13,6 +13,7 @@ void userHandler(User user, ServerData& serverData)
 	char isCreate[1];
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
+	std::vector<std::vector<std::pair<int, int>>> receivingPositions(2, std::vector<std::pair<int, int>>(16));
 
 	while (isCreate[0] == '1' and serverData.is_room_exist(name))
 	{
@@ -54,37 +55,26 @@ void userHandler(User user, ServerData& serverData)
 
 		while (true)
 		{
-			if (recv(user.socket, (char*)&gameState, sizeof(gameState), NULL) == -1)
+			if (recv(user.socket, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
-			if (!gameState.get_isWin())
+			if (send(serverData.get_room(room_id).opponent, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
-			if (send(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL) == -1)
+			if (recv(serverData.get_room(room_id).opponent, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
-			if (recv(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL) == -1)
-			{
-				closesocket(user.socket);
-				closesocket(serverData.get_room(room_id).opponent);
-				break;
-			}
-			if (!gameState.get_isWin())
-			{
-				closesocket(user.socket);
-				closesocket(serverData.get_room(room_id).opponent);
-				break;
-			}
-			if (send(user.socket, (char*)&gameState, sizeof(gameState), NULL))
+
+			if (send(user.socket, (char*)&receivingPositions, sizeof(receivingPositions), NULL))
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);
