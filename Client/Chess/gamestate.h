@@ -3,12 +3,15 @@
 #define GAMESTATE_H
 
 #include <vector>
+#include <QObject>
+#include <QDebug>
 
-
-class GameState
+class GameState: public QObject
 {
+    Q_OBJECT
+
 public:
-    GameState();
+    GameState(QObject *parent);
 
     // 0 - белые, 1 - Черные
     // 0, 1, 2, 3, 4, 5, 6, 7, 8 - пешки
@@ -38,6 +41,9 @@ private:
     StateTeam yourTeam;
     StateTeam teamToMove;
     int pieceIdCounter;
+
+signals:
+    void startReceivingSig();
 
 };
 

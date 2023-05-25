@@ -2,7 +2,6 @@
 #include "ui_room.h"
 #include <QDebug>
 
-
 Room::Room(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Room)
@@ -18,8 +17,12 @@ Room::Room(QWidget *parent) :
     view->setMaximumSize(450,450);
 
 
-    GameState* state = new GameState();
+    GameState* state = new GameState(nullptr);
     qDebug() << "GameState created";
+    boardPieces.resize(2, std::vector<ChessPiece*>(0));
+
+    QObject::connect(state, &GameState::startReceivingSig, this, &Room::startReceiving);
+
 /*
     PiecePawn *piece = new PiecePawn(GameState::StateTeam::Black);
     piece->setGameState(state);
@@ -28,7 +31,6 @@ Room::Room(QWidget *parent) :
     state->changePieceIdCounter();
     view->board->addItem(piece);
 */
-
 
 
     // --------------------- CREATING WHITE TEAM ---------------------
@@ -41,6 +43,9 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         pawn->setNewPos(i * 50, 300);
         view->board->addItem(pawn);
+        boardPieces[0].push_back(pawn);
+
+        qDebug() << "pawn" << pawn->getID();
     }
 
     // ---- creating knight ----
@@ -52,6 +57,9 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         knight->setNewPos(50 + i * 50 * 5, 50 * 7);
         view->board->addItem(knight);
+        boardPieces[0].push_back(knight);
+
+        qDebug() << "knight" << knight->getID();
     }
 
     // ---- creating bishop ----
@@ -63,17 +71,23 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         bishop->setNewPos(50 * 2 + i * 50 * 3, 50 * 7);
         view->board->addItem(bishop);
+        boardPieces[0].push_back(bishop);
+
+        qDebug() << "bishop" << bishop->getID();
     }
 
     // ---- creating rook ----
     qDebug() << state->getPieceIdCounter();
     for(int i = 0; i < 2; ++i){
-        PieceRook *rook = new PieceRook(GameState::StateTeam::White);
+        PieceRook* rook = new PieceRook(GameState::StateTeam::White);
         rook->setGameState(state);
         rook->setId(state->getPieceIdCounter());
         state->changePieceIdCounter();
         rook->setNewPos(i * 50 * 7, 50 * 7);
         view->board->addItem(rook);
+        boardPieces[0].push_back(rook);
+
+        qDebug() << "rook" <<rook->getID();
     }
 
     // ---- creating queen ----
@@ -85,6 +99,9 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         queen->setNewPos(50 * 3, 50 * 7);
         view->board->addItem(queen);
+        boardPieces[0].push_back(queen);
+
+        qDebug() << "queen" <<queen->getID();
         break;
     }
 
@@ -97,6 +114,9 @@ Room::Room(QWidget *parent) :
         state->changePieceIdCounter();
         king->setNewPos(50 * 4, 50 * 7);
         view->board->addItem(king);
+        boardPieces[0].push_back(king);
+
+        qDebug() << "king" <<king->getID();
         break;
     }
     qDebug() << "White team created";
@@ -175,6 +195,7 @@ Room::Room(QWidget *parent) :
     m_objectCreated = true;
     qDebug() << "Constructor end";
 
+
     // view->board->addItem(piece);
 
     // PiecePawn *piece1 = new PiecePawn(PiecePawn::Team::Black);
@@ -189,4 +210,11 @@ Room::~Room()
 
 bool Room::isObjectCreated() const{
     return m_objectCreated;
+}
+
+void Room::startReceiving(){
+    qDebug() << "Receiving Started";
+    // ---------------------------------
+    // ---- ADD RECEIVING & analyze ----
+    // ---------------------------------
 }

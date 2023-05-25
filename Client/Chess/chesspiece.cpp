@@ -296,6 +296,15 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
                 << "(int)(square->mapToParent(center)).x(), (int)(square->mapToParent(center)).y()"
                 << (int) (square->mapToParent(center)).x()
                 << (int) (square->mapToParent(center)).y();
+
+
+
+            // ------------------------------------
+            // ---------- SEND TO SERVER ----------
+            // ------------------------------------
+
+            emit getGameState()->startReceivingSig();
+
         }
         else{
             setPos(m_startPos);

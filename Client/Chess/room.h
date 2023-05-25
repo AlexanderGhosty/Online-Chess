@@ -27,11 +27,16 @@ public:
     QScrollArea *scrollArea;
     bool isObjectCreated() const;
 
+    std::vector<std::vector<ChessPiece*>> boardPieces;
+
 
 private:
     ChessPiece::Type teamToMove;
     Ui::Room *ui;
     bool m_objectCreated;
+
+private slots:
+    void startReceiving();
 };
 
 #endif // ROOM_H

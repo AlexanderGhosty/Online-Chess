@@ -10,7 +10,7 @@
 // 14 - queen
 // 15 - king
 
-GameState::GameState()
+GameState::GameState(QObject *parent)
 {
     yourTeam = StateTeam::White; // потом исправить. Сейчас для тестов
     teamToMove = StateTeam::White;
@@ -70,4 +70,11 @@ void GameState::changeGameStatePosition(GameState::StateTeam team, int id, int x
     else{
         positions[1][id] = std::make_pair(x, y);
     }
+}
+
+
+// ------------------- server ---------------------
+
+void GameState::startReceivingSig(){
+    qDebug() << "receive signal";
 }
