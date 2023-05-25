@@ -57,12 +57,16 @@ void userHandler(User user, ServerData& serverData)
 			recv(user.socket, (char*)&gameState, sizeof(gameState), NULL);
 			if (!gameState.get_isWin())
 			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
 			send(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
 			recv(serverData.get_room(room_id).opponent, (char*)&gameState, sizeof(gameState), NULL);
 			if (!gameState.get_isWin())
 			{
+				closesocket(user.socket);
+				closesocket(serverData.get_room(room_id).opponent);
 				break;
 			}
 			send(user.socket, (char*)&gameState, sizeof(gameState), NULL);
