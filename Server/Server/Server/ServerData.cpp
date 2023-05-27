@@ -69,11 +69,11 @@ bool ServerData::is_room_exist(std::string name)
 	return false;
 }
 
-bool ServerData::connect_room(std::string name, int connection)
+bool ServerData::connect_room(std::string name, int connection, std::string password)
 {
 	for (auto& room : rooms)
 	{
-		if (name == room.name)
+		if (name == room.name and password == room.password)
 		{
 			room.opponent = connection;
 			// this->numberOfUsers += 1;

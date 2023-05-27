@@ -27,7 +27,7 @@ public:
 	int add_room(Room room);
 	void delete_room(Room room);
 	bool is_room_exist(std::string name);
-	bool connect_room(std::string name, int connection);
+	bool connect_room(std::string name, int connection, std::string password);
 	Room& get_room(int room_id);
 
 	void change_max_users(int max_users);

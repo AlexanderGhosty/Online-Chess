@@ -91,7 +91,7 @@ void userHandler(User user, ServerData& serverData)
 	{
 		while (true)
 		{
-			if (serverData.connect_room(name, user.socket))
+			if (serverData.connect_room(name, user.socket, password))
 			{
 				std::cout << "connected complited";
 				bool complited = true;
