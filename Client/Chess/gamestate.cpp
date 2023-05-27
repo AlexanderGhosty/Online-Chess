@@ -15,7 +15,7 @@ GameState::GameState(QObject *parent)
     // yourTeam = StateTeam::White; // потом исправить. Сейчас для тестов
     teamToMove = StateTeam::White;
     pieceIdCounter = 0;
-    positions.resize(2, std::vector<std::pair<int, int>>(16));
+    // positions.resize(2, std::vector<std::pair<int, int>>(16));
 }
 
 
@@ -53,7 +53,7 @@ int GameState::getPieceIdCounter(){
     return this->pieceIdCounter;
 }
 
-std::vector<std::vector<std::pair<int, int>>> GameState::getGameStatePositions(){
+std::array<std::array<std::pair<int, int>, 16>,2> GameState::getGameStatePositions(){
     return this->positions;
 }
 

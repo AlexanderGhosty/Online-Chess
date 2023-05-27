@@ -76,7 +76,7 @@ void userHandler(User user, ServerData& serverData)
 			}
 			std::cout << "recieved data from opponent" << std::endl;
 
-			if (send(user.socket, (char*)&receivingPositions, sizeof(receivingPositions), NULL))
+			if (send(user.socket, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
 			{
 				closesocket(user.socket);
 				closesocket(serverData.get_room(room_id).opponent);

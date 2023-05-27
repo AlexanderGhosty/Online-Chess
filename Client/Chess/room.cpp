@@ -20,6 +20,7 @@ Room::Room(QWidget *parent) :
     state = new GameState(nullptr);
 
     qDebug() << "GameState created";
+
     boardPieces.resize(2, std::vector<ChessPiece*>(0));
 
     QObject::connect(state, &GameState::startReceivingSig, this, &Room::startReceiving);
@@ -223,7 +224,8 @@ void Room::startReceiving(){
     // ---------------------------------
     // ---- ADD RECEIVING & analyze ----
     // ---------------------------------
-    std::vector<std::vector<std::pair<int, int>>> receivingPositions(2, std::vector<std::pair<int,int>>(16));
+
+    std::array<std::array<std::pair<int, int>, 16>,2>  receivingPositions;
 
     while (recv(state->connection, (char*)&receivingPositions, sizeof(receivingPositions), NULL) == -1)
     {

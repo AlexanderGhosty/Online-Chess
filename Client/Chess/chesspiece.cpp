@@ -321,7 +321,7 @@ void ChessPiece::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         // ---------- SEND TO SERVER ----------
         // ------------------------------------
         // /*
-        std::vector<std::vector<std::pair<int, int>>> sendingPositions = gameState->getGameStatePositions();
+        std::array<std::array<std::pair<int, int>, 16>,2> sendingPositions = gameState->getGameStatePositions();
 
         if (send(gameState->connection, (char*)&sendingPositions, sizeof(sendingPositions), NULL) == -1)
         {

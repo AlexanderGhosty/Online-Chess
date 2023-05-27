@@ -5,6 +5,7 @@
 #include <vector>
 #include <QObject>
 #include <QDebug>
+#include <array>
 
 // server include
 #pragma comment(lib, "ws2_32.lib")
@@ -38,15 +39,18 @@ public:
     void changePieceIdCounter();
     int getPieceIdCounter();
     void resetPieceIdCounter();
+
     // positions
-    std::vector<std::vector<std::pair<int, int>>> getGameStatePositions();
+    // std::vector<std::vector<std::pair<int, int>>> getGameStatePositions();
+    std::array<std::array<std::pair<int, int>, 16>,2> getGameStatePositions();
     void changeGameStatePosition(StateTeam team, int id,int x, int y);
 
     // server
     SOCKET connection;
 
 private:
-    std::vector<std::vector<std::pair<int, int>>> positions;
+    // std::vector<std::vector<std::pair<int, int>>> positions;
+    std::array<std::array<std::pair<int, int>, 16>,2> positions;
     StateTeam yourTeam;
     StateTeam teamToMove;
     int pieceIdCounter;
