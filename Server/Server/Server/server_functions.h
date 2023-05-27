@@ -5,7 +5,7 @@
 #include "GameState.h"
 #include <string>
 #include <iostream>
-
+#include <array>
 
 void userHandler(User user, ServerData& serverData);
 //void listener

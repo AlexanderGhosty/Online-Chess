@@ -3,7 +3,6 @@
 void userHandler(User user, ServerData& serverData)
 {
 	serverData.add_user(user);
-
 	// Getting information about creating or joining a room
 	char name[65];
 	recv(user.socket, name, sizeof(name), NULL);
@@ -13,7 +12,7 @@ void userHandler(User user, ServerData& serverData)
 	char isCreate[1];
 	recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 
-	std::vector<std::vector<std::pair<int, int>>> receivingPositions(2, std::vector<std::pair<int, int>>(16));
+	std::array<std::array<std::pair<int, int>, 16>, 2> receivingPositions;
 
 	while (isCreate[0] == '1' and serverData.is_room_exist(name))
 	{
