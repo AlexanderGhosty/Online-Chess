@@ -18,8 +18,8 @@ void userHandler(User user, ServerData& serverData)
 	{
 		std::cout << "Room exist";
 
-		bool notComplited = false;
-		send(user.socket, (char*)notComplited, sizeof(notComplited), NULL);
+		char notComplited[]{ '0' };
+		send(user.socket, notComplited, sizeof(notComplited), NULL);
 
 		recv(user.socket, name, sizeof(name), NULL);
 		recv(user.socket, password, sizeof(name), NULL);
@@ -39,8 +39,8 @@ void userHandler(User user, ServerData& serverData)
 		int room_id = serverData.add_room(room);
 		serverData.get_room(room_id).add_connection(user.socket);
 
-		bool complited = true;
-		send(user.socket, (char*)complited, sizeof(complited), NULL);
+		char complited[]{'1'};
+		send(user.socket, complited, sizeof(complited), NULL);
 
 		while (!serverData.get_room(room_id).isFull())
 		{
@@ -94,8 +94,8 @@ void userHandler(User user, ServerData& serverData)
 			if (serverData.connect_room(name, user.socket, password))
 			{
 				std::cout << "connected complited";
-				bool complited = true;
-				send(user.socket, (char*)complited, sizeof(complited), NULL);
+				char complited[]{ '1' };
+				send(user.socket, complited, sizeof(complited), NULL);
 				// ---------------------------------------
 				// Добавить действия в интерфейсе и тд !!!
 				// ---------------------------------------
@@ -103,9 +103,15 @@ void userHandler(User user, ServerData& serverData)
 			}
 			else
 			{
-				bool notComplited = false;
-				send(user.socket, (char*)notComplited, sizeof(notComplited), NULL);
-				// send(комната не найдена ввести заново)
+				char notComplited[]{ '0' };
+				send(user.socket, notComplited, sizeof(notComplited), NULL);
+				char name[65];
+				recv(user.socket, name, sizeof(name), NULL);
+				char password[255];
+				recv(user.socket, password, sizeof(name), NULL);
+				// bool isCreate{0};
+				char isCreate[1];
+				recv(user.socket, (char*)isCreate, sizeof(name), NULL);
 			}
 		}
 		
