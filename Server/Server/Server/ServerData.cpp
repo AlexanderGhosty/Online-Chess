@@ -73,10 +73,9 @@ bool ServerData::connect_room(std::string name, int connection, std::string pass
 {
 	for (auto& room : rooms)
 	{
-		if (name == room.name and password == room.password)
+		if (name == room.name and password == room.password and room.opponent != -1)
 		{
 			room.opponent = connection;
-			// this->numberOfUsers += 1;
 			return true;
 		}
 	}
