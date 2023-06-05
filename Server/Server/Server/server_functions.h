@@ -8,4 +8,3 @@
 #include <array>
 
 void userHandler(User user, ServerData& serverData);
-//void listener

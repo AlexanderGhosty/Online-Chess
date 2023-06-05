@@ -24,10 +24,6 @@ void userHandler(User user, ServerData& serverData)
 		recv(user.socket, name, sizeof(name), NULL);
 		recv(user.socket, password, sizeof(name), NULL);
 		recv(user.socket, (char*)isCreate, sizeof(name), NULL);
-
-		// ---------------------------------------
-		// Добавить действия в интерфейсе и тд !!!
-		// ---------------------------------------
 	}
 
 	// logs
@@ -47,8 +43,6 @@ void userHandler(User user, ServerData& serverData)
 			// Sleep for 5 seconds.
 			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
-
-		// игра стартует
 
 		while (true)
 		{
@@ -94,9 +88,6 @@ void userHandler(User user, ServerData& serverData)
 				std::cout << "connected complited";
 				char complited[]{ '1' };
 				send(user.socket, complited, sizeof(complited), NULL);
-				// ---------------------------------------
-				// Добавить действия в интерфейсе и тд !!!
-				// ---------------------------------------
 				break;
 			}
 			else
